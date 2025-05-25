@@ -1,0 +1,19 @@
+services:
+  arc.api:
+    image: ${DOCKER_REGISTRY-}arcapi
+    container_name: arc-api
+    depends_on:
+      - arc.seq
+    build:
+      context: .
+      dockerfile: src/API/arc.API/Dockerfile
+
+  arc.seq:
+    image: datalust/seq:latest
+    container_name: arc-seq
+    ports:
+      - "5341:5341"
+      - "8081:80"
+    environment:
+      - ACCEPT_EULA=Y
+
