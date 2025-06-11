@@ -1,7 +1,7 @@
 using ARC.Domain.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ARC.Persistence.Entities
+namespace ARC.Domain.Entities
 {
 
     public class ChildParent : Entity

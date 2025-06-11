@@ -1,4 +1,4 @@
-using ARC.Persistence.Entities;
+using ARC.Domain.Entities;
 using ARC.Application.Abstractions.Persistence;
 
 namespace ARC.Persistence.Repositories

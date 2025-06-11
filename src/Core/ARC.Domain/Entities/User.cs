@@ -1,7 +1,7 @@
-using ARC.Persistence.Entities;
+using ARC.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace ARC.Persistence.Identity
+namespace ARC.Domain.Entities
 {
     public class User : IdentityUser<int>
     {

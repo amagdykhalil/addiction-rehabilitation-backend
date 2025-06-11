@@ -1,9 +1,9 @@
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using ARC.Application.Abstractions.Infrastructure;
 using ARC.Application.Abstractions.UserContext;
+using ARC.Domain.Entities;
 using ARC.Infrastructure.Authentication;
-using ARC.Persistence.Identity;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,7 +13,7 @@ namespace Infrastructure.Authentication;
 /// <summary>
 /// Implementation of ITokenProvider that generates and manages JWT tokens.
 /// </summary>
-internal sealed class TokenProvider : ITokenProvider
+public sealed class TokenProvider : ITokenProvider
 {
     private readonly JWTSettings _jwtSetting;
     private readonly IIdentityService _identityService;
@@ -30,8 +30,8 @@ internal sealed class TokenProvider : ITokenProvider
         var claims = new List<Claim>
         {
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            //new Claim(JwtRegisteredClaimNames.GivenName, user.Person.FirstName),
-            //new Claim(JwtRegisteredClaimNames.FamilyName, user.Person.LastName),
+            new Claim(JwtRegisteredClaimNames.GivenName, user.Person.FirstName),
+            new Claim(JwtRegisteredClaimNames.FamilyName, user.Person.LastName),
             new(ClaimTypes.Email, user.Email)
         };
         claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));

@@ -1,6 +1,6 @@
 using ARC.Application.Features.Auth.Commands.RevokeToken;
 
-namespace ARC.API.Tests.Features.Auth.Commands.RevokeToken
+namespace ARC.Application.Tests.Features.Auth.Commands
 {
     public class RevokeTokenCommandHandlerTests
     {
@@ -24,7 +24,7 @@ namespace ARC.API.Tests.Features.Auth.Commands.RevokeToken
         {
             // Arrange
             var command = new RevokeTokenCommand("valid-token");
-            var refreshToken = new Domain.Entities.RefreshToken
+            var refreshToken = new RefreshToken
             {
                 Token = command.Token,
                 UserId = 1,
@@ -66,7 +66,7 @@ namespace ARC.API.Tests.Features.Auth.Commands.RevokeToken
             var command = new RevokeTokenCommand("invalid-token");
 
             _refreshTokenRepositoryMock.Setup(x => x.GetAsync(command.Token))
-                .ReturnsAsync((Domain.Entities.RefreshToken?)null);
+                .ReturnsAsync((RefreshToken?)null);
 
             // Act
             var result = await _handler.Handle(command, CancellationToken.None);
@@ -81,7 +81,7 @@ namespace ARC.API.Tests.Features.Auth.Commands.RevokeToken
         {
             // Arrange
             var command = new RevokeTokenCommand("revoked-token");
-            var refreshToken = new Domain.Entities.RefreshToken
+            var refreshToken = new RefreshToken
             {
                 Token = command.Token,
                 UserId = 1,

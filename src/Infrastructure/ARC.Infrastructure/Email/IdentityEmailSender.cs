@@ -1,6 +1,6 @@
 // Services/EmailSender.cs
 using ARC.Application.Contracts;
-using ARC.Persistence.Identity;
+using ARC.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 

@@ -1,4 +1,4 @@
-namespace ARC.Persistence.Entities
+namespace ARC.Domain.Entities
 {
     public class ResearchAnswerChoice : Entity
     {

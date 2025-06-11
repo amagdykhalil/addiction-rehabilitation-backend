@@ -1,9 +1,9 @@
 using ARC.Application.Abstractions.Infrastructure;
 using ARC.Application.Abstractions.UserContext;
 using ARC.Application.Contracts;
+using ARC.Domain.Entities;
 using ARC.Infrastructure.Authentication;
 using ARC.Infrastructure.Email;
-using ARC.Persistence.Identity;
 using Infrastructure.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;

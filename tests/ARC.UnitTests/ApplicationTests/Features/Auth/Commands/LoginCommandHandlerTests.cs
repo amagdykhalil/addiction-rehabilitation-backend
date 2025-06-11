@@ -1,6 +1,10 @@
+using ARC.Application.Abstractions.Infrastructure;
+using ARC.Application.Abstractions.UserContext;
+using ARC.Application.Features.Auth.Commands.Login;
+using ARC.Persistence.Identity;
+using Microsoft.Extensions.Logging;
 
-
-namespace ARC.API.IntegrationTests.Features.Auth.Commands.Login
+namespace ARC.Application.Tests.Features.Auth.Commands
 {
     public class LoginCommandHandlerTests
     {

@@ -1,9 +1,6 @@
-using ARC.Domain.Abstract;
-using ARC.Persistence.Entities;
-
-namespace ARC.Persistence.Entities
+namespace ARC.Domain.Entities
 {
-    public class QuestionVersion : CreationTrackableSoftDeleteEntity 
+    public class QuestionVersion : CreationTrackableSoftDeleteEntity
     {
         public int ResearchQuestionId { get; set; }
         public DateTime StartDate { get; set; }
@@ -19,4 +16,4 @@ namespace ARC.Persistence.Entities
         public ICollection<ResearchQuestionAnswer> ResearchQuestionAnswers { get; set; }
         public ICollection<ResearchQuestionChoice> ResearchQuestionChoices { get; set; }
     }
-} 
+}

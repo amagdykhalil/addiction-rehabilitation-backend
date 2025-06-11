@@ -56,7 +56,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.Address", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,7 +87,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("Addresses", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.AdmissionAssessment", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.AdmissionAssessment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -150,7 +150,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("AdmissionAssessments", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.Center", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.Center", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -188,7 +188,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("Centers", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.ChildParent", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.ChildParent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -223,7 +223,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("ChildParents", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.City", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.City", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -251,7 +251,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("Cities", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.Country", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.Country", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -284,7 +284,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("Countries", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.EmergencyContact", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.EmergencyContact", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -317,7 +317,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("EmergencyContacts", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.EmergencyContactAddress", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.EmergencyContactAddress", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -346,7 +346,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("EmergencyContactAddresses", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.EmploymentStatus", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.EmploymentStatus", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -413,7 +413,7 @@ namespace ARC.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.Patient", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.Patient", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -450,7 +450,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("Patients", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.PatientPlacement", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.PatientPlacement", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -496,7 +496,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("PatientPlacements", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.Person", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.Person", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -567,7 +567,7 @@ namespace ARC.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.Placement", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.Placement", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -595,7 +595,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("Placements", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.QuestionVersion", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.QuestionVersion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -647,7 +647,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("QuestionVersions", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.Research", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.Research", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -670,7 +670,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("Researches", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.ResearchAnswerChoice", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.ResearchAnswerChoice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -693,7 +693,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("ResearchAnswerChoices", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.ResearchQuestion", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.ResearchQuestion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -726,7 +726,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("ResearchQuestions", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.ResearchQuestionAnswer", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.ResearchQuestionAnswer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -773,7 +773,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("ResearchQuestionAnswers", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.ResearchQuestionChoice", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.ResearchQuestionChoice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -806,7 +806,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("ResearchQuestionChoices", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.ResearchType", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.ResearchType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -839,7 +839,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("ResearchTypes", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.ResidenceInfo", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.ResidenceInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -867,7 +867,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("ResidenceInfos", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.State", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.State", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1154,9 +1154,9 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.Address", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.Address", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.City", "City")
+                    b.HasOne("ARC.Domain.Entities.City", "City")
                         .WithMany("Addresses")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1165,29 +1165,29 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("City");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.AdmissionAssessment", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.AdmissionAssessment", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.Center", "Center")
+                    b.HasOne("ARC.Domain.Entities.Center", "Center")
                         .WithMany()
                         .HasForeignKey("CenterId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ARC.Persistence.Entities.EmploymentStatus", "EmploymentStatus")
+                    b.HasOne("ARC.Domain.Entities.EmploymentStatus", "EmploymentStatus")
                         .WithMany()
                         .HasForeignKey("EmploymentStatusId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ARC.Persistence.Entities.Patient", "Patient")
+                    b.HasOne("ARC.Domain.Entities.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ARC.Persistence.Entities.ResidenceInfo", "ResidenceInfo")
+                    b.HasOne("ARC.Domain.Entities.ResidenceInfo", "ResidenceInfo")
                         .WithOne()
-                        .HasForeignKey("ARC.Persistence.Entities.AdmissionAssessment", "ResidenceInfoId")
+                        .HasForeignKey("ARC.Domain.Entities.AdmissionAssessment", "ResidenceInfoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1200,15 +1200,15 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("ResidenceInfo");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.Center", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.Center", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.City", "City")
+                    b.HasOne("ARC.Domain.Entities.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ARC.Persistence.Entities.State", "State")
+                    b.HasOne("ARC.Domain.Entities.State", "State")
                         .WithMany()
                         .HasForeignKey("StateId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1219,17 +1219,17 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("State");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.ChildParent", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.ChildParent", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.EmploymentStatus", "EmploymentStatus")
+                    b.HasOne("ARC.Domain.Entities.EmploymentStatus", "EmploymentStatus")
                         .WithMany()
                         .HasForeignKey("EmploymentStatusId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ARC.Persistence.Entities.Person", "ParentPerson")
+                    b.HasOne("ARC.Domain.Entities.Person", "ParentPerson")
                         .WithOne()
-                        .HasForeignKey("ARC.Persistence.Entities.ChildParent", "ParentPersonId")
+                        .HasForeignKey("ARC.Domain.Entities.ChildParent", "ParentPersonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1238,9 +1238,9 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("ParentPerson");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.City", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.City", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.State", "State")
+                    b.HasOne("ARC.Domain.Entities.State", "State")
                         .WithMany("Cities")
                         .HasForeignKey("StateId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1249,17 +1249,17 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("State");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.EmergencyContact", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.EmergencyContact", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.EmergencyContactAddress", "ContactAddress")
+                    b.HasOne("ARC.Domain.Entities.EmergencyContactAddress", "ContactAddress")
                         .WithOne()
-                        .HasForeignKey("ARC.Persistence.Entities.EmergencyContact", "ContactAddressId")
+                        .HasForeignKey("ARC.Domain.Entities.EmergencyContact", "ContactAddressId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ARC.Persistence.Entities.Person", "EmergentPerson")
+                    b.HasOne("ARC.Domain.Entities.Person", "EmergentPerson")
                         .WithOne()
-                        .HasForeignKey("ARC.Persistence.Entities.EmergencyContact", "EmergentPersonId")
+                        .HasForeignKey("ARC.Domain.Entities.EmergencyContact", "EmergentPersonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1268,15 +1268,15 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("EmergentPerson");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.EmergencyContactAddress", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.EmergencyContactAddress", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.Address", "Address")
+                    b.HasOne("ARC.Domain.Entities.Address", "Address")
                         .WithOne()
-                        .HasForeignKey("ARC.Persistence.Entities.EmergencyContactAddress", "AddressId")
+                        .HasForeignKey("ARC.Domain.Entities.EmergencyContactAddress", "AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ARC.Persistence.Entities.EmergencyContact", "EmergencyContacts")
+                    b.HasOne("ARC.Domain.Entities.EmergencyContact", "EmergencyContacts")
                         .WithMany()
                         .HasForeignKey("EmergencyContactsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1287,26 +1287,26 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("EmergencyContacts");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.Patient", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.Patient", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.Person", "Person")
+                    b.HasOne("ARC.Domain.Entities.Person", "Person")
                         .WithOne()
-                        .HasForeignKey("ARC.Persistence.Entities.Patient", "PersonId")
+                        .HasForeignKey("ARC.Domain.Entities.Patient", "PersonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.PatientPlacement", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.PatientPlacement", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.AdmissionAssessment", "AdmissionAssessment")
+                    b.HasOne("ARC.Domain.Entities.AdmissionAssessment", "AdmissionAssessment")
                         .WithMany()
                         .HasForeignKey("AdmissionAssessmentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ARC.Persistence.Entities.Placement", "Placement")
+                    b.HasOne("ARC.Domain.Entities.Placement", "Placement")
                         .WithMany("PatientPlacements")
                         .HasForeignKey("PlacementId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1317,9 +1317,9 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("Placement");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.Person", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.Person", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.Country", "Nationality")
+                    b.HasOne("ARC.Domain.Entities.Country", "Nationality")
                         .WithMany("People")
                         .HasForeignKey("NationalityId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1328,13 +1328,13 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("Nationality");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.QuestionVersion", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.QuestionVersion", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.ResearchQuestionChoice", "ParentChoice")
+                    b.HasOne("ARC.Domain.Entities.ResearchQuestionChoice", "ParentChoice")
                         .WithMany()
                         .HasForeignKey("ParentChoiceId");
 
-                    b.HasOne("ARC.Persistence.Entities.ResearchQuestion", "ResearchQuestion")
+                    b.HasOne("ARC.Domain.Entities.ResearchQuestion", "ResearchQuestion")
                         .WithMany("QuestionVersions")
                         .HasForeignKey("ResearchQuestionId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1345,15 +1345,15 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("ResearchQuestion");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.Research", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.Research", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.AdmissionAssessment", "AdmissionAssessment")
+                    b.HasOne("ARC.Domain.Entities.AdmissionAssessment", "AdmissionAssessment")
                         .WithMany()
                         .HasForeignKey("AdmissionAssessmentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ARC.Persistence.Entities.ResearchType", "ResearchType")
+                    b.HasOne("ARC.Domain.Entities.ResearchType", "ResearchType")
                         .WithMany("Researches")
                         .HasForeignKey("ResearchTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1364,15 +1364,15 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("ResearchType");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.ResearchAnswerChoice", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.ResearchAnswerChoice", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.ResearchQuestionAnswer", "ResearchQuestionAnswer")
+                    b.HasOne("ARC.Domain.Entities.ResearchQuestionAnswer", "ResearchQuestionAnswer")
                         .WithMany("ResearchAnswerChoices")
                         .HasForeignKey("ResearchQuestionAnswerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ARC.Persistence.Entities.ResearchQuestionChoice", "ResearchQuestionChoice")
+                    b.HasOne("ARC.Domain.Entities.ResearchQuestionChoice", "ResearchQuestionChoice")
                         .WithMany("ResearchAnswerChoices")
                         .HasForeignKey("ResearchQuestionChoiceId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1383,14 +1383,14 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("ResearchQuestionChoice");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.ResearchQuestion", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.ResearchQuestion", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.ResearchQuestion", "ParentQuestion")
+                    b.HasOne("ARC.Domain.Entities.ResearchQuestion", "ParentQuestion")
                         .WithMany("ChildQuestions")
                         .HasForeignKey("ParentQuestionId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("ARC.Persistence.Entities.ResearchType", "ResearchType")
+                    b.HasOne("ARC.Domain.Entities.ResearchType", "ResearchType")
                         .WithMany("ResearchQuestions")
                         .HasForeignKey("ResearchTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1401,19 +1401,19 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("ResearchType");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.ResearchQuestionAnswer", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.ResearchQuestionAnswer", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.ResearchQuestionChoice", "Choice")
+                    b.HasOne("ARC.Domain.Entities.ResearchQuestionChoice", "Choice")
                         .WithMany()
                         .HasForeignKey("ChoiceId");
 
-                    b.HasOne("ARC.Persistence.Entities.QuestionVersion", "QuestionVersion")
+                    b.HasOne("ARC.Domain.Entities.QuestionVersion", "QuestionVersion")
                         .WithMany("ResearchQuestionAnswers")
                         .HasForeignKey("QuestionVersionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ARC.Persistence.Entities.Research", "Research")
+                    b.HasOne("ARC.Domain.Entities.Research", "Research")
                         .WithMany("ResearchQuestionAnswers")
                         .HasForeignKey("ResearchId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1426,9 +1426,9 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("Research");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.ResearchQuestionChoice", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.ResearchQuestionChoice", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.QuestionVersion", "QuestionVersion")
+                    b.HasOne("ARC.Domain.Entities.QuestionVersion", "QuestionVersion")
                         .WithMany("ResearchQuestionChoices")
                         .HasForeignKey("QuestionVersionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1437,9 +1437,9 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("QuestionVersion");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.ResearchType", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.ResearchType", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.ResearchType", "ParentResearchType")
+                    b.HasOne("ARC.Domain.Entities.ResearchType", "ParentResearchType")
                         .WithMany("ChildResearchTypes")
                         .HasForeignKey("ParentResearchTypeId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -1447,18 +1447,18 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("ParentResearchType");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.ResidenceInfo", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.ResidenceInfo", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.Address", "Address")
+                    b.HasOne("ARC.Domain.Entities.Address", "Address")
                         .WithOne()
-                        .HasForeignKey("ARC.Persistence.Entities.ResidenceInfo", "AddressId");
+                        .HasForeignKey("ARC.Domain.Entities.ResidenceInfo", "AddressId");
 
                     b.Navigation("Address");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.State", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.State", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.Country", "Country")
+                    b.HasOne("ARC.Domain.Entities.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1469,7 +1469,7 @@ namespace ARC.Persistence.Migrations
 
             modelBuilder.Entity("ARC.Persistence.Identity.User", b =>
                 {
-                    b.HasOne("ARC.Persistence.Entities.Person", "Person")
+                    b.HasOne("ARC.Domain.Entities.Person", "Person")
                         .WithOne()
                         .HasForeignKey("ARC.Persistence.Identity.User", "PersonId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1529,51 +1529,51 @@ namespace ARC.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.City", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.City", b =>
                 {
                     b.Navigation("Addresses");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.Country", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.Country", b =>
                 {
                     b.Navigation("People");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.Placement", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.Placement", b =>
                 {
                     b.Navigation("PatientPlacements");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.QuestionVersion", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.QuestionVersion", b =>
                 {
                     b.Navigation("ResearchQuestionAnswers");
 
                     b.Navigation("ResearchQuestionChoices");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.Research", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.Research", b =>
                 {
                     b.Navigation("ResearchQuestionAnswers");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.ResearchQuestion", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.ResearchQuestion", b =>
                 {
                     b.Navigation("ChildQuestions");
 
                     b.Navigation("QuestionVersions");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.ResearchQuestionAnswer", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.ResearchQuestionAnswer", b =>
                 {
                     b.Navigation("ResearchAnswerChoices");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.ResearchQuestionChoice", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.ResearchQuestionChoice", b =>
                 {
                     b.Navigation("ResearchAnswerChoices");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.ResearchType", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.ResearchType", b =>
                 {
                     b.Navigation("ChildResearchTypes");
 
@@ -1582,7 +1582,7 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("Researches");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Entities.State", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.State", b =>
                 {
                     b.Navigation("Cities");
                 });

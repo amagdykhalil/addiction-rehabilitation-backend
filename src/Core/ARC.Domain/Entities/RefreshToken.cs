@@ -1,5 +1,4 @@
 using ARC.Domain.Abstract;
-using ARC.Persistence.Identity;
 
 namespace ARC.Domain.Entities
 {

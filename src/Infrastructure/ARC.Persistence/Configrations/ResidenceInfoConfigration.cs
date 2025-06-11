@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ARC.Persistence.Entities;
+using ARC.Domain.Entities;
 
 namespace ARC.Persistence.Configrations
 {

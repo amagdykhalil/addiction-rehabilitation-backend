@@ -1,6 +1,3 @@
-using ARC.Persistence.Entities;
-using ARC.Application.Abstractions.Persistence;
-
 namespace ARC.Persistence.Repositories
 {
     public class AddressRepository : GenericRepository<Address>, IAddressRepository
@@ -11,4 +8,4 @@ namespace ARC.Persistence.Repositories
             _context = context;
         }
     }
-} 
+}

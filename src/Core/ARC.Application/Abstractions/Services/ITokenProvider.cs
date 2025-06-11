@@ -1,5 +1,7 @@
 
 
+using ARC.Domain.Entities;
+
 namespace ARC.Application.Abstractions.Infrastructure
 {
     /// <summary>

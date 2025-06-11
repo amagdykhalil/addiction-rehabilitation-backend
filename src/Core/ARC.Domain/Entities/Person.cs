@@ -1,6 +1,6 @@
 using ARC.Domain.Enums;
 
-namespace ARC.Persistence.Entities
+namespace ARC.Domain.Entities
 {
 
     public class Person : Entity
