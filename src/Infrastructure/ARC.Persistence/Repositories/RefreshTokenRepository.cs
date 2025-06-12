@@ -1,5 +1,4 @@
 using ARC.Application.Contracts.Persistence;
-using ARC.Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using System.Security.Cryptography;
 
@@ -12,8 +11,9 @@ namespace ARC.Persistence.Repositories
         public RefreshTokenRepository(AppDbContext context, IConfiguration configuration) : base(context)
         {
             _context = context;
-            _refreshTokenLifetime = configuration.GetValue<int>("RefreshTokenExpirationDays");
+            _refreshTokenLifetime = configuration.GetValue<int>("RefreshToken:ExpirationDays");
         }
+
 
         public async Task<RefreshToken?> GetActiveRefreshTokenAsync(int userId)
         {

@@ -1,7 +1,4 @@
-using ARC.Application.Abstractions.UserContext;
 using ARC.Infrastructure.Authentication;
-using ARC.Domain.Entities;
-using ARC.Persistence.Identity;
 using Infrastructure.Authentication;
 using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;

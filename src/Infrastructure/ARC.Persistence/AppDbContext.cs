@@ -1,7 +1,4 @@
-﻿using ARC.Domain.Entities;
-using ARC.Persistence.Extensions;
-using ARC.Persistence.Identity;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ARC.Persistence
@@ -54,8 +51,6 @@ namespace ARC.Persistence
             modelBuilder.Entity<IdentityUserToken<int>>().ToTable("UserTokens");
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
-
-            modelBuilder.Seed();
         }
 
 

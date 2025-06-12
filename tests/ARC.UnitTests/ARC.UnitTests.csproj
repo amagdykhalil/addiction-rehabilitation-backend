@@ -21,6 +21,7 @@
     <ProjectReference Include="..\..\src\Core\ARC.Domain\ARC.Domain.csproj" />
     <ProjectReference Include="..\..\src\Infrastructure\ARC.Infrastructure\ARC.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\Infrastructure\ARC.Persistence\ARC.Persistence.csproj" />
+    <ProjectReference Include="..\ARC.Tests.Common\ARC.Tests.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,7 +6,7 @@ namespace Infrastructure.Authentication;
 /// <summary>
 /// Implementation of IUserContext that provides access to the current user's information.
 /// </summary>
-internal sealed class UserContext : IUserContext
+public sealed class UserContext : IUserContext
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 

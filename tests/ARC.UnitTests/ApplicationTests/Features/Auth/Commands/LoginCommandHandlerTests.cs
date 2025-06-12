@@ -1,8 +1,5 @@
-using ARC.Application.Abstractions.Infrastructure;
-using ARC.Application.Abstractions.UserContext;
+
 using ARC.Application.Features.Auth.Commands.Login;
-using ARC.Persistence.Identity;
-using Microsoft.Extensions.Logging;
 
 namespace ARC.Application.Tests.Features.Auth.Commands
 {
