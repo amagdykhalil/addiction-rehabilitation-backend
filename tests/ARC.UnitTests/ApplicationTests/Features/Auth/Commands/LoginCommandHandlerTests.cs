@@ -1,4 +1,3 @@
-
 using ARC.Application.Features.Auth.Commands.Login;
 
 namespace ARC.Application.Tests.Features.Auth.Commands
@@ -10,6 +9,7 @@ namespace ARC.Application.Tests.Features.Auth.Commands
         private readonly Mock<IRefreshTokenRepository> _refreshTokenRepositoryMock;
         private readonly Mock<IUnitOfWork> _unitOfWorkMock;
         private readonly Mock<ILogger<LoginCommandHandler>> _loggerMock;
+        private readonly Mock<IStringLocalizer<LoginCommandHandler>> _localizerMock;
         private readonly LoginCommandHandler _handler;
 
         public LoginCommandHandlerTests()
@@ -19,13 +19,20 @@ namespace ARC.Application.Tests.Features.Auth.Commands
             _refreshTokenRepositoryMock = new Mock<IRefreshTokenRepository>();
             _unitOfWorkMock = new Mock<IUnitOfWork>();
             _loggerMock = new Mock<ILogger<LoginCommandHandler>>();
+            _localizerMock = new Mock<IStringLocalizer<LoginCommandHandler>>();
+
+            // Setup default localization
+            var localizedString = new LocalizedString(LocalizationKeys.InvalidCredentials, "Email or password is incorrect!");
+            _localizerMock.Setup(x => x[LocalizationKeys.InvalidCredentials])
+                .Returns(localizedString);
 
             _handler = new LoginCommandHandler(
                 _identityServiceMock.Object,
                 _tokenProviderMock.Object,
                 _refreshTokenRepositoryMock.Object,
                 _unitOfWorkMock.Object,
-                _loggerMock.Object
+                _loggerMock.Object,
+                _localizerMock.Object
             );
         }
 
@@ -120,16 +127,20 @@ namespace ARC.Application.Tests.Features.Auth.Commands
         {
             // Arrange
             var command = new LoginCommand("test@example.com", "hashedPassword");
+            var errorMessage = "Email or password is incorrect!";
 
             _identityServiceMock.Setup(x => x.GetUserAsync(command.Email, command.PasswordHash))
                 .ReturnsAsync((User?)null);
+
+            _localizerMock.Setup(x => x[LocalizationKeys.InvalidCredentials])
+                .Returns(new LocalizedString(LocalizationKeys.InvalidCredentials, errorMessage));
 
             // Act
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
             Assert.False(result.IsSuccess);
-            Assert.Equal("Email or password is incorrect!", result.Errors.First());
+            Assert.Equal(errorMessage, result.Errors.First());
 
             _tokenProviderMock.Verify(x => x.Create(It.IsAny<User>()), Times.Never);
             _refreshTokenRepositoryMock.Verify(x => x.GetActiveRefreshTokenAsync(It.IsAny<int>()), Times.Never);

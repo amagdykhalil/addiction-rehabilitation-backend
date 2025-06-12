@@ -1,4 +1,5 @@
 using ARC.Application.Abstractions.Infrastructure;
+using ARC.Application.Abstractions.Services;
 using ARC.Application.Abstractions.UserContext;
 using ARC.Domain.Entities;
 using ARC.Infrastructure.Authentication;
@@ -17,10 +18,12 @@ public sealed class TokenProvider : ITokenProvider
 {
     private readonly JWTSettings _jwtSetting;
     private readonly IIdentityService _identityService;
-    public TokenProvider(IOptions<JWTSettings> jwtSettingOptions, IIdentityService identityService)
+    private readonly IDateTimeProvider _dateTimeProvider;
+    public TokenProvider(IOptions<JWTSettings> jwtSettingOptions, IIdentityService identityService, IDateTimeProvider dateTimeProvider = null)
     {
         _jwtSetting = jwtSettingOptions.Value;
         _identityService = identityService;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     public async Task<string> Create(User user)
@@ -41,8 +44,8 @@ public sealed class TokenProvider : ITokenProvider
         {
             Issuer = _jwtSetting.Issuer,
             Audience = _jwtSetting.Audience,
-            IssuedAt = DateTime.UtcNow,
-            Expires = DateTime.UtcNow.AddMinutes(_jwtSetting.AccessTokenExpirationMinutes),
+            IssuedAt = _dateTimeProvider.UtcNow,
+            Expires = _dateTimeProvider.UtcNow.AddMinutes(_jwtSetting.AccessTokenExpirationMinutes),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSetting.Secret)), SecurityAlgorithms.HmacSha256),
             Subject = new ClaimsIdentity(claims)
         };
@@ -59,7 +62,7 @@ public sealed class TokenProvider : ITokenProvider
     /// <returns>The DateTime when the token will expire.</returns>
     public DateTime GetAccessTokenExpiration()
     {
-        return DateTime.UtcNow.AddMinutes(_jwtSetting.AccessTokenExpirationMinutes);
+        return _dateTimeProvider.UtcNow.AddMinutes(_jwtSetting.AccessTokenExpirationMinutes);
     }
 }
 

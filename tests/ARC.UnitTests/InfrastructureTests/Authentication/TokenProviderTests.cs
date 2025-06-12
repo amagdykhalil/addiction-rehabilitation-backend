@@ -1,3 +1,4 @@
+using ARC.Application.Abstractions.Services;
 using ARC.Infrastructure.Authentication;
 using Infrastructure.Authentication;
 using Microsoft.Extensions.Options;
@@ -9,12 +10,18 @@ namespace ARC.Infrastructure.Tests.Authentication
     public class TokenProviderTests
     {
         private readonly Mock<IIdentityService> _identityServiceMock;
+        private readonly Mock<IDateTimeProvider> _dateTimeProviderMock;
         private readonly JWTSettings _jwtSettings;
         private readonly TokenProvider _tokenProvider;
+        private readonly DateTime _utcNow;
 
         public TokenProviderTests()
         {
             _identityServiceMock = new Mock<IIdentityService>();
+            _dateTimeProviderMock = new Mock<IDateTimeProvider>();
+            _utcNow = DateTime.UtcNow;
+            _dateTimeProviderMock.Setup(x => x.UtcNow).Returns(_utcNow);
+
             _jwtSettings = new JWTSettings
             {
                 Secret = "your-256-bit-secret-your-256-bit-secret-your-256-bit-secret",
@@ -24,7 +31,7 @@ namespace ARC.Infrastructure.Tests.Authentication
             };
 
             var options = Options.Create(_jwtSettings);
-            _tokenProvider = new TokenProvider(options, _identityServiceMock.Object);
+            _tokenProvider = new TokenProvider(options, _identityServiceMock.Object, _dateTimeProviderMock.Object);
         }
 
         [Fact]
@@ -57,6 +64,9 @@ namespace ARC.Infrastructure.Tests.Authentication
 
             Assert.Equal(_jwtSettings.Issuer, jwtToken.Issuer);
             Assert.Equal(_jwtSettings.Audience, jwtToken.Audiences.First());
+            Assert.Equal(_utcNow, jwtToken.IssuedAt, TimeSpan.FromSeconds(1));
+            Assert.Equal(_utcNow.AddMinutes(_jwtSettings.AccessTokenExpirationMinutes), jwtToken.ValidTo,TimeSpan.FromSeconds(1));
+
             // NameIdentifier: support both URI and "nameid"
             var nameIdClaim = jwtToken.Claims.FirstOrDefault(c =>
                 c.Type == ClaimTypes.NameIdentifier || c.Type == JwtRegisteredClaimNames.NameId);
@@ -82,7 +92,6 @@ namespace ARC.Infrastructure.Tests.Authentication
             // Roles
             var roleClaims = jwtToken.Claims.Where(c => c.Type == "role").Select(c => c.Value).ToArray();
             Assert.Equal(roles, roleClaims);
-
         }
 
         [Fact]
@@ -92,10 +101,8 @@ namespace ARC.Infrastructure.Tests.Authentication
             var expiration = _tokenProvider.GetAccessTokenExpiration();
 
             // Assert
-            var expectedExpiration = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationMinutes);
-            Assert.Equal(expectedExpiration.Date, expiration.Date);
-            Assert.Equal(expectedExpiration.Hour, expiration.Hour);
-            Assert.Equal(expectedExpiration.Minute, expiration.Minute);
+            var expectedExpiration = _utcNow.AddMinutes(_jwtSettings.AccessTokenExpirationMinutes);
+            Assert.Equal(expectedExpiration, expiration, TimeSpan.FromSeconds(1));
         }
     }
 }

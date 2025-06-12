@@ -1,4 +1,6 @@
-﻿using ARC.Persistence;
+﻿using ARC.Application.Abstractions.Services;
+using ARC.Infrastructure.Common.Services;
+using ARC.Persistence;
 using ARC.Persistence.Extensions;
 using ARC.Persistence.Identity;
 using ARC.Persistence.Repositories;
@@ -55,6 +57,7 @@ namespace ARC.IntegrationTests.Infrastructure.Extensions
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<IDateTimeProvider, DateTimeProvider>();
 
             return services;
         }

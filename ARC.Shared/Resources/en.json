@@ -1,0 +1,7 @@
+{
+  "EmailRequired": "Email is required",
+  "PasswordRequired": "Password is required",
+  "InvalidEmail": "Please enter a valid email address",
+  "InvalidCredentials": "Email or password is incorrect!",
+  "InvalidToken": "Invalid or expired refresh token"
+}

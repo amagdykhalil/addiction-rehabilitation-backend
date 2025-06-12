@@ -3,6 +3,7 @@ using ARC.API.Middleware;
 using ARC.Application;
 using ARC.Application.Common.Validator;
 using ARC.Infrastructure;
+using ARC.Infrastructure.Localization;
 using ARC.Persistence;
 using Scalar.AspNetCore;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Results;
@@ -19,8 +20,9 @@ namespace ARC.API
         }
         public void ConfigureBuilder(WebApplicationBuilder builder)
         {
-            LoggingExtensions.UseLogging(builder);
-            AzureKeyVaultExtensions.UseAzureKeyVault(builder);
+            builder.ConfigureLogging();
+            builder.ConfigureAzureKeyVault();
+
         }
         public void ConfigureServices(IServiceCollection services)
         {
@@ -30,7 +32,7 @@ namespace ARC.API
 
             services.AddProblemDetails();
             services.AddAuthorization();
-
+            services.AddDistributedMemoryCache();
 
             services.AddInfrastructure(_configuration)
                     .AddPersistence(_configuration)
@@ -39,9 +41,9 @@ namespace ARC.API
             services.AddSingleton<IFluentValidationAutoValidationResultFactory, ValidationResultFactory>();
             services.AddOpenApi();
 
-            CorsExtensions.AddCors(services, _configuration);
-            APIVersioningExtentions.AddAPIVersioning(services);
-            RateLimiterExtension.AddRateLimiter(services);
+            services.AddCors(_configuration);
+            services.AddAPIVersioning();
+            services.AddGlobalRateLimiter();
         }
         public void Configure(WebApplication app)
         {
@@ -64,6 +66,7 @@ namespace ARC.API
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseCors(CorsExtensions.AllowsOrigins);
+            app.UseRequestCulture();
 
             app.MapControllers();
         }

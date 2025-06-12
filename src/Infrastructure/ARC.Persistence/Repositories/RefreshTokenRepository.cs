@@ -1,3 +1,4 @@
+using ARC.Application.Abstractions.Services;
 using ARC.Application.Contracts.Persistence;
 using Microsoft.Extensions.Configuration;
 using System.Security.Cryptography;
@@ -8,16 +9,18 @@ namespace ARC.Persistence.Repositories
     {
         private readonly AppDbContext _context;
         private readonly int _refreshTokenLifetime;
-        public RefreshTokenRepository(AppDbContext context, IConfiguration configuration) : base(context)
+        private readonly IDateTimeProvider _dateTimeProvider;
+        public RefreshTokenRepository(AppDbContext context, IConfiguration configuration, IDateTimeProvider dateTimeProvider) : base(context)
         {
             _context = context;
             _refreshTokenLifetime = configuration.GetValue<int>("RefreshToken:ExpirationDays");
+            _dateTimeProvider = dateTimeProvider;
         }
 
 
         public async Task<RefreshToken?> GetActiveRefreshTokenAsync(int userId)
         {
-            return await _context.RefreshTokens.FirstOrDefaultAsync(r => r.RevokedOn == null && r.ExpiresOn > DateTime.UtcNow && r.UserId == userId);
+            return await _context.RefreshTokens.FirstOrDefaultAsync(r => r.RevokedOn == null && r.ExpiresOn > _dateTimeProvider.UtcNow && r.UserId == userId);
         }
 
         public RefreshToken GenerateRefreshToken(int userId)
@@ -33,8 +36,8 @@ namespace ARC.Persistence.Repositories
             return new RefreshToken
             {
                 Token = Token,
-                CreatedOn = DateTime.UtcNow,
-                ExpiresOn = DateTime.UtcNow.AddDays(_refreshTokenLifetime),
+                CreatedOn = _dateTimeProvider.UtcNow,
+                ExpiresOn = _dateTimeProvider.UtcNow.AddDays(_refreshTokenLifetime),
                 UserId = userId
             };
         }

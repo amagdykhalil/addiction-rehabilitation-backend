@@ -1,10 +1,8 @@
-using Asp.Versioning;
-
 namespace ARC.API.Extensions.Startup
 {
     public static class APIVersioningExtentions
     {
-        public static void AddAPIVersioning(IServiceCollection services)
+        public static void AddAPIVersioning(this IServiceCollection services)
         {
             services.AddApiVersioning(apiVersion =>
             {

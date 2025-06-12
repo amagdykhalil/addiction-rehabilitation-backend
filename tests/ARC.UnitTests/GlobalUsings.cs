@@ -5,3 +5,5 @@ global using ARC.Application.Contracts.Persistence.UoW;
 global using ARC.Domain.Entities;
 global using Microsoft.Extensions.Logging;
 global using Moq;
+global using ARC.Shared.Keys;
+global using Microsoft.Extensions.Localization;

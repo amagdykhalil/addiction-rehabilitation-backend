@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
     <Compile Remove="Interfaces\**" />
@@ -7,10 +7,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\ARC.Shared\ARC.Shared.csproj" />
     <ProjectReference Include="..\..\Core\ARC.Domain\ARC.Domain.csproj" />
     <ProjectReference Include="..\..\Core\ARC.Application\ARC.Application.csproj" />
   </ItemGroup>

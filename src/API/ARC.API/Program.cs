@@ -12,9 +12,3 @@ var app = builder.Build();
 startup.Configure(app);
 
 app.Run();
-
-
-
-
-
-public partial class Program { };

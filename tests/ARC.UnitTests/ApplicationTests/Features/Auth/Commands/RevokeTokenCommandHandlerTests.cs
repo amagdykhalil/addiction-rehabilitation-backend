@@ -1,3 +1,4 @@
+using ARC.Application.Abstractions.Services;
 using ARC.Application.Features.Auth.Commands.RevokeToken;
 
 namespace ARC.Application.Tests.Features.Auth.Commands
@@ -6,16 +7,22 @@ namespace ARC.Application.Tests.Features.Auth.Commands
     {
         private readonly Mock<IRefreshTokenRepository> _refreshTokenRepositoryMock;
         private readonly Mock<IUnitOfWork> _unitOfWorkMock;
+        private readonly Mock<IDateTimeProvider> _dateTimeProviderMock;
         private readonly RevokeTokenCommandHandler _handler;
+        private readonly DateTime _utcNow;
 
         public RevokeTokenCommandHandlerTests()
         {
             _refreshTokenRepositoryMock = new Mock<IRefreshTokenRepository>();
             _unitOfWorkMock = new Mock<IUnitOfWork>();
+            _dateTimeProviderMock = new Mock<IDateTimeProvider>();
+            _utcNow = DateTime.UtcNow;
+            _dateTimeProviderMock.Setup(x => x.UtcNow).Returns(_utcNow);
 
             _handler = new RevokeTokenCommandHandler(
                 _refreshTokenRepositoryMock.Object,
-                _unitOfWorkMock.Object
+                _unitOfWorkMock.Object,
+                _dateTimeProviderMock.Object
             );
         }
 
@@ -40,7 +47,7 @@ namespace ARC.Application.Tests.Features.Auth.Commands
 
             // Assert
             Assert.True(result.IsSuccess);
-            Assert.Equal(DateTime.UtcNow.Date, refreshToken.RevokedOn?.Date);
+            Assert.Equal(_utcNow, refreshToken.RevokedOn!.Value, TimeSpan.FromSeconds(1));
             _unitOfWorkMock.Verify(x => x.SaveChangesAsync(CancellationToken.None), Times.Once);
         }
 

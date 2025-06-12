@@ -1,9 +1,11 @@
+using Microsoft.Extensions.Localization;
+
 namespace ARC.API.Controllers;
 
 [ApiController]
 [ApiVersion("1.0")]
 [Route("api/People")]
-public class PeopleController(IMediator mediator) : ControllerBase
+public class PeopleController(IMediator mediator, IStringLocalizer<PeopleController> localizer) : ControllerBase
 {
     //Template
     //[HttpGet("{PersonId}")]

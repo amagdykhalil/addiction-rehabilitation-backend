@@ -1,3 +1,5 @@
+using ARC.Shared.Keys;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 
 namespace ARC.Application.Features.Auth.Commands.Login
@@ -7,17 +9,17 @@ namespace ARC.Application.Features.Auth.Commands.Login
         ITokenProvider tokenProvider,
         IRefreshTokenRepository refreshTokenRepository,
         IUnitOfWork unitOfWork,
-        ILogger<LoginCommandHandler> logger)
+        ILogger<LoginCommandHandler> logger,
+        IStringLocalizer<LoginCommandHandler> localizer)
         : ICommandHandler<LoginCommand, AuthDTO>
     {
         public async Task<Result<AuthDTO>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-
             var user = await identityService.GetUserAsync(request.Email, request.PasswordHash);
 
             if (user == null)
             {
-                return Result<AuthDTO>.Error("Email or password is incorrect!");
+                return Result<AuthDTO>.Error(localizer[LocalizationKeys.InvalidCredentials]);
             }
 
             var accessToken = await tokenProvider.Create(user);
@@ -27,7 +29,6 @@ namespace ARC.Application.Features.Auth.Commands.Login
                 UserId = user.Id,
                 ExpiresOn = tokenProvider.GetAccessTokenExpiration(),
             };
-
 
             var ActiveRefreshToken = await refreshTokenRepository.GetActiveRefreshTokenAsync(user.Id);
 
