@@ -22,18 +22,22 @@ namespace ARC.Infrastructure
 
             services.AddLocalizationSetup();
 
-            services.AddScoped<IEmailSender<User>, IdentityEmailSender>();
-            services.AddScoped<IEmailService, EmailService>();
+            // Email services
+            services.AddTransient<IEmailTemplate, EmailTemplate>();
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IUserEmailService, UserEmailService>();
+            
             services.AddScoped<IUserContext, UserContext>();
             services.AddScoped<ITokenProvider, TokenProvider>();
             services.AddScoped<IDateTimeProvider, DateTimeProvider>();
 
             services.Configure<SmtpSettings>(configuration.GetSection("SmtpSettings"));
             JWTExtensions.AddJWT(services, configuration);
+
             return services;
         }
     }
-
 }
 
 

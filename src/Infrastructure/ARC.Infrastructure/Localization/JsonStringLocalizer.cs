@@ -1,5 +1,6 @@
 ﻿using ARC.Shared.Keys;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Reflection;
 
 namespace ARC.Infrastructure.Localization
@@ -39,65 +40,75 @@ namespace ARC.Infrastructure.Localization
 
         public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
         {
-            var resourceName = GetResourceName(Thread.CurrentThread.CurrentCulture.Name);
-            using var stream = _resourcesAssembly.GetManifestResourceStream(resourceName);
-            if (stream == null) yield break;
+            //var resourceName = GetResourceName(Thread.CurrentThread.CurrentCulture.Name);
+            //using var stream = _resourcesAssembly.GetManifestResourceStream(resourceName);
+            //if (stream == null) yield break;
 
-            using var streamReader = new StreamReader(stream);
-            using var reader = new JsonTextReader(streamReader);
+            //using var streamReader = new StreamReader(stream);
+            //using var reader = new JsonTextReader(streamReader);
 
-            while (reader.Read())
-            {
-                if (reader.TokenType != JsonToken.PropertyName)
-                    continue;
+            //while (reader.Read())
+            //{
+            //    if (reader.TokenType != JsonToken.PropertyName)
+            //        continue;
 
-                var key = reader.Value as string;
-                reader.Read();
-                var value = _serializer.Deserialize<string>(reader);
-                yield return new LocalizedString(key, value);
-            }
+            //    var key = reader.Value as string;
+            //    reader.Read();
+            //    var value = _serializer.Deserialize<string>(reader);
+            //    yield return new LocalizedString(key, value);
+            //}
+            throw new NotImplementedException();
         }
 
         private string GetString(string key)
         {
-            var resourceName = GetResourceName(Thread.CurrentThread.CurrentCulture.Name);
-            var cacheKey = $"locale_{Thread.CurrentThread.CurrentCulture.Name}_{key}";
+            // Expecting key in format "fileName:nested.key.path"
+            var split = key.Split(':', 2);
+            if (split.Length != 2)
+                return string.Empty;
+
+            var fileName = split[0];
+            var propertyPath = split[1];
+
+            var culture = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+            var cacheKey = $"locale_{culture}_{fileName}_{propertyPath}";
             var cacheValue = _cache.GetString(cacheKey);
 
             if (!string.IsNullOrEmpty(cacheValue))
                 return cacheValue;
 
-            var result = GetValueFromJSON(key, resourceName);
+            var result = GetValueFromJSON(propertyPath, fileName, culture);
 
             if (!string.IsNullOrEmpty(result))
                 _cache.SetString(cacheKey, result);
 
-            return result;
+            return result ?? key;
         }
 
-        private string GetValueFromJSON(string propertyName, string resourceName)
+        private string GetValueFromJSON(string propertyPath, string fileName, string culture)
         {
-            if (string.IsNullOrEmpty(propertyName) || string.IsNullOrEmpty(resourceName))
+            var resourceName = GetResourceName(culture, fileName);
+            using var stream = _resourcesAssembly.GetManifestResourceStream(resourceName);
+            if (stream == null)
                 return string.Empty;
 
-            using var stream = _resourcesAssembly.GetManifestResourceStream(resourceName);
-            if (stream == null) return string.Empty;
+            using var reader = new StreamReader(stream);
+            using var jsonReader = new JsonTextReader(reader);
+            var jObject = JToken.ReadFrom(jsonReader);
 
-            using var streamReader = new StreamReader(stream);
-            using var reader = new JsonTextReader(streamReader);
+            // Use JSONPath to directly select nested tokens
+            var token = jObject.SelectToken(propertyPath);
+            if (token == null)
+                return string.Empty;
 
-            while (reader.Read())
-            {
-                if (reader.TokenType == JsonToken.PropertyName && reader.Value as string == propertyName)
-                {
-                    reader.Read();
-                    return _serializer.Deserialize<string>(reader);
-                }
-            }
+            // Return the raw string or JSON as needed
+            if (token.Type == JTokenType.String || token.Type == JTokenType.Null)
+                return token.ToString();
 
-            return string.Empty;
+            return token.ToString(Formatting.None);
         }
 
-        private static string GetResourceName(string culture) => $"{RESOURCE_BASE_PATH}.{culture}.json";
+        private static string GetResourceName(string culture, string fileName)
+            => $"{RESOURCE_BASE_PATH}.{culture}.{fileName}.json";
     }
 }

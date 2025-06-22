@@ -7,7 +7,6 @@ using ARC.Infrastructure.Localization;
 using ARC.Persistence;
 using Scalar.AspNetCore;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Results;
-
 namespace ARC.API
 {
     public class Startup
@@ -30,18 +29,20 @@ namespace ARC.API
             services.AddControllers();
             services.AddExceptionHandler<GlobalExceptionHandler>();
 
+            services.AddCors(_configuration);
+
             services.AddProblemDetails();
             services.AddAuthorization();
             services.AddDistributedMemoryCache();
 
-            services.AddInfrastructure(_configuration)
-                    .AddPersistence(_configuration)
+
+            services.AddPersistence(_configuration)
+                    .AddInfrastructure(_configuration)
                     .AddApplication(_configuration);
 
             services.AddSingleton<IFluentValidationAutoValidationResultFactory, ValidationResultFactory>();
             services.AddOpenApi();
 
-            services.AddCors(_configuration);
             services.AddAPIVersioning();
             services.AddGlobalRateLimiter();
         }

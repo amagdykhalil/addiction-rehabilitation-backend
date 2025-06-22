@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 namespace ARC.API.Extensions;
 
 internal static class ResultExtensions
@@ -45,7 +46,7 @@ internal static class ResultExtensions
         return result.Status switch
         {
             ResultStatus.Error => new BadRequestObjectResult(ApiResponse.BadRequest(errors)),
-            ResultStatus.Unavailable => new UnauthorizedObjectResult(ApiResponse.Unauthorized(errors)),
+            ResultStatus.Unauthorized => new UnauthorizedObjectResult(ApiResponse.Unauthorized(errors)),
             ResultStatus.Forbidden => new ForbidResult(),
             ResultStatus.NotFound => new NotFoundObjectResult(ApiResponse.NotFound(errors)),
             ResultStatus.NoContent => new NoContentResult(),

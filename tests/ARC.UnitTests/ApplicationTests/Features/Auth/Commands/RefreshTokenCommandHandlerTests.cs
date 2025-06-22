@@ -2,9 +2,10 @@ using ARC.Application.Abstractions.Services;
 using ARC.Application.Features.Auth.Commands.RefreshToken;
 
 
+
 namespace ARC.Application.Tests.Features.Auth.Commands
 {
-    public class RefreshTokenCommandHandlerTests
+    public class RefreshTokenCommandHandlerTests : IClassFixture<LocalizationKeyFixture>
     {
         private readonly Mock<IRefreshTokenRepository> _refreshTokenRepositoryMock;
         private readonly Mock<IIdentityService> _identityServiceMock;
@@ -27,8 +28,8 @@ namespace ARC.Application.Tests.Features.Auth.Commands
             _dateTimeProviderMock.Setup(x => x.UtcNow).Returns(_utcNow);
 
             // Setup default localization
-            var localizedString = new LocalizedString(LocalizationKeys.InvalidToken, "Invalid or expired refresh token");
-            _localizerMock.Setup(x => x[LocalizationKeys.InvalidToken])
+            var localizedString = new LocalizedString(LocalizationKeys.Auth.InvalidToken, "Invalid or expired refresh token");
+            _localizerMock.Setup(x => x[LocalizationKeys.Auth.InvalidToken])
                 .Returns(localizedString);
 
             _handler = new RefreshTokenCommandHandler(
@@ -99,8 +100,8 @@ namespace ARC.Application.Tests.Features.Auth.Commands
             var command = new RefreshTokenCommand("");
             var errorMessage = "Invalid or expired refresh token";
 
-            _localizerMock.Setup(x => x[LocalizationKeys.InvalidToken])
-                .Returns(new LocalizedString(LocalizationKeys.InvalidToken, errorMessage));
+            _localizerMock.Setup(x => x[LocalizationKeys.Auth.InvalidToken])
+                .Returns(new LocalizedString(LocalizationKeys.Auth.InvalidToken, errorMessage));
 
             // Act
             var result = await _handler.Handle(command, CancellationToken.None);
@@ -124,8 +125,8 @@ namespace ARC.Application.Tests.Features.Auth.Commands
             _refreshTokenRepositoryMock.Setup(x => x.GetWithUserAsync(command.Token))
                 .ReturnsAsync((Domain.Entities.RefreshToken?)null);
 
-            _localizerMock.Setup(x => x[LocalizationKeys.InvalidToken])
-                .Returns(new LocalizedString(LocalizationKeys.InvalidToken, errorMessage));
+            _localizerMock.Setup(x => x[LocalizationKeys.Auth.InvalidToken])
+                .Returns(new LocalizedString(LocalizationKeys.Auth.InvalidToken, errorMessage));
 
             // Act
             var result = await _handler.Handle(command, CancellationToken.None);

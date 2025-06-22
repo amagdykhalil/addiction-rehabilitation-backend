@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\ARC.Shared\ARC.Shared.csproj" />
+    <ProjectReference Include="..\..\ARC.Shared\ARC.Shared.csproj" />
     <ProjectReference Include="..\ARC.Domain\ARC.Domain.csproj" />
   </ItemGroup>
 

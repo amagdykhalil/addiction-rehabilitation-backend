@@ -1,9 +1,19 @@
-namespace ARC.Application.Contracts
+namespace ARC.Application.Abstractions.Services
 {
     public interface IEmailService
     {
-        Task SendEmailAsync(string toEmail, string subject, string body, bool isHtmlMessage = true);
+        Task SendAsync(EmailMessage message);
     }
+
+    public record EmailMessage(
+        string Subject, 
+        string TemplateName, 
+        IEnumerable<Placeholder> Placeholders,
+        EmailAddress From, 
+        IEnumerable<EmailAddress> To,
+        IEnumerable<EmailAddress>? Cc = null,
+        IEnumerable<EmailAddress>? Bcc = null,
+        IEnumerable<EmailAttachment>? Attachments = null);
 }
 
 

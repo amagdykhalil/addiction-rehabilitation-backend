@@ -15,9 +15,9 @@ namespace ARC.Persistence
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IIdentityService, IdentityService>();
 
-            IdentityExtensions.AddIdentity(services);
-            DbContextExtensions.AddDbContextWithInterceptors(services, configuration);
-            RepositoryRegistrationExtensions.ScanAndRegisterRepositories(services);
+            services.AddAppIdentity();
+            services.AddDbContextWithInterceptors(configuration);
+            services.ScanAndRegisterRepositories();
 
             return services;
         }

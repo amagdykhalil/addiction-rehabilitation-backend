@@ -39,7 +39,7 @@ namespace ARC.IntegrationTests.Infrastructure.Extensions
 
         private static IServiceCollection ConfigureIdentity(this IServiceCollection services)
         {
-            IdentityExtensions.AddIdentity(services);
+            services.AddAppIdentity();
             return services;
         }
 

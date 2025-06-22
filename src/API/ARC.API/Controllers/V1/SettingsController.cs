@@ -8,14 +8,22 @@ namespace ARC.API.Controllers.V1
     public class SettingsController : ControllerBase
     {
         [HttpPost("set-language")]
-        public IActionResult SetLanguage(string culture, string returnUrl)
+        public IActionResult SetLanguage([FromQuery] string culture)
         {
             Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+                new CookieOptions
+                {
+                    Expires = DateTimeOffset.UtcNow.AddYears(1),
+                    Domain = "localhost",
+                    SameSite = SameSiteMode.None,
+                    Secure = true
+
+                }
             );
-            return LocalRedirect(returnUrl);
+            return NoContent();
+
         }
     }
 }

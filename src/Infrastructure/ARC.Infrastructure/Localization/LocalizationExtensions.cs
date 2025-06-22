@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using ARC.Shared.Keys;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System.Globalization;
 
@@ -11,6 +12,7 @@ namespace ARC.Infrastructure.Localization
             services.AddLocalization();
             services.AddSingleton<IStringLocalizerFactory, JsonStringLocalizerFactory>();
             services.AddSingleton<RequestCultureMiddleware>();
+            ReflectionLocalizationKeyProvider.Initialize();
 
             services.Configure<RequestLocalizationOptions>(options =>
             {

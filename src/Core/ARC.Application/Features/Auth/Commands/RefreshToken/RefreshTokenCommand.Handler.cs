@@ -1,6 +1,4 @@
 using ARC.Application.Abstractions.Services;
-using ARC.Shared.Keys;
-using Microsoft.Extensions.Localization;
 
 namespace ARC.Application.Features.Auth.Commands.RefreshToken
 {
@@ -17,14 +15,14 @@ namespace ARC.Application.Features.Auth.Commands.RefreshToken
         {
             if (string.IsNullOrEmpty(request.Token))
             {
-                return Result<AuthDTO>.Error(localizer[LocalizationKeys.InvalidToken]);
+                return Result<AuthDTO>.Error(localizer[LocalizationKeys.Auth.InvalidToken]);
             }
 
             var refreshToken = await refreshTokenRepository.GetWithUserAsync(request.Token);
 
             if (refreshToken is null || !refreshToken.IsActive)
             {
-                return Result<AuthDTO>.Error(localizer[LocalizationKeys.InvalidToken]);
+                return Result<AuthDTO>.Error(localizer[LocalizationKeys.Auth.InvalidToken]);
             }
 
             // Revoke old token

@@ -33,8 +33,8 @@ public sealed class TokenProvider : ITokenProvider
         var claims = new List<Claim>
         {
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.GivenName, user.Person.FirstName),
-            new Claim(JwtRegisteredClaimNames.FamilyName, user.Person.LastName),
+            //new Claim(JwtRegisteredClaimNames.GivenName, user.Person.FirstName),
+            //new Claim(JwtRegisteredClaimNames.FamilyName, user.Person.LastName),
             new(ClaimTypes.Email, user.Email)
         };
         claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));

@@ -1,6 +1,4 @@
-using ARC.Shared.Keys;
-using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Logging;
+
 
 namespace ARC.Application.Features.Auth.Commands.Login
 {
@@ -15,11 +13,11 @@ namespace ARC.Application.Features.Auth.Commands.Login
     {
         public async Task<Result<AuthDTO>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var user = await identityService.GetUserAsync(request.Email, request.PasswordHash);
+            var user = await identityService.GetUserAsync(request.Email, request.Password);
 
             if (user == null)
             {
-                return Result<AuthDTO>.Error(localizer[LocalizationKeys.InvalidCredentials]);
+                return Result<AuthDTO>.Error(localizer[LocalizationKeys.Auth.InvalidCredentials]);
             }
 
             var accessToken = await tokenProvider.Create(user);

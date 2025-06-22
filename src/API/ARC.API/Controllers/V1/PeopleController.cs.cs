@@ -14,6 +14,13 @@ public class PeopleController(IMediator mediator, IStringLocalizer<PeopleControl
     //public async Task<IActionResult> Get([FromRoute] GetPersonQuery query) =>
     //(await mediator.Send(query)).ToActionResult();
 
+    [HttpPost("{PersonId}")]
+    public IActionResult Get([FromRoute] int PersonId)
+    {
+        return Ok(PersonId);
+    }
+
+
 }
 
 

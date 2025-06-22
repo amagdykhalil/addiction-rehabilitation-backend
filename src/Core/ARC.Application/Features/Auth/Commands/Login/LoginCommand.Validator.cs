@@ -1,22 +1,20 @@
-using ARC.Shared.Keys;
-using Microsoft.Extensions.Localization;
-
 namespace ARC.Application.Features.Auth.Commands.Login
 {
     public class LoginCommandValidator : AbstractValidator<LoginCommand>
     {
-        public LoginCommandValidator(IStringLocalizer<LoginCommandValidator> localizer)
+        public LoginCommandValidator(
+            IStringLocalizer<LoginCommandValidator> localizer,
+            IIdentityService identityService)
         {
             RuleFor(l => l.Email)
                 .NotEmpty()
-                .WithMessage(localizer[LocalizationKeys.EmailRequired])
+                .WithMessage(localizer[LocalizationKeys.Validation.EmailRequired])
                 .EmailAddress()
-                .WithMessage(localizer[LocalizationKeys.InvalidEmail]);
+                .WithMessage(localizer[LocalizationKeys.Validation.InvalidEmail]);
 
-            RuleFor(l => l.PasswordHash)
+            RuleFor(l => l.Password)
                 .NotEmpty()
-                .WithMessage(localizer[LocalizationKeys.PasswordRequired]);
+                .WithMessage(localizer[LocalizationKeys.Validation.PasswordRequired]);
         }
     }
 }
-

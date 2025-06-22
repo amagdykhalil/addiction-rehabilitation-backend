@@ -6,7 +6,7 @@ namespace ARC.Application.Common.Queries
     /// Interface for queries that return paginated results.
     /// </summary>
     /// <typeparam name="TData">The type of data in the paginated result.</typeparam>
-    public interface IPaginatedQuery<TData> : IQuery<ARC.Application.Common.Models.PagedResult<TData>>;
+    public interface IPaginatedQuery<TData> : IQuery<Models.PagedResult<TData>>;
 
     /// <summary>
     /// Interface for queries that return paginated results with additional metadata.

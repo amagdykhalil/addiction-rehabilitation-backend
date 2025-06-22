@@ -14,8 +14,7 @@ namespace ARC.API.Extensions.Startup
                     policy.WithOrigins(allowedOrigins)
                           .AllowCredentials()
                           .AllowAnyMethod()
-                          .AllowAnyHeader()
-                          .WithExposedHeaders("Location");
+                          .AllowAnyHeader();
                 });
             });
         }
