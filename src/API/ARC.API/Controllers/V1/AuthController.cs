@@ -1,4 +1,3 @@
-using ARC.Application.Features.Auth;
 using ARC.Application.Features.Auth.Commands.ConfirmEmail;
 using ARC.Application.Features.Auth.Commands.ForgotPassword;
 using ARC.Application.Features.Auth.Commands.Login;
@@ -6,6 +5,7 @@ using ARC.Application.Features.Auth.Commands.RefreshToken;
 using ARC.Application.Features.Auth.Commands.ResendConfirmationEmail;
 using ARC.Application.Features.Auth.Commands.ResetPassword;
 using ARC.Application.Features.Auth.Commands.RevokeToken;
+using ARC.Application.Features.Auth.Models;
 
 namespace ARC.API.Controllers.V1
 {
@@ -60,6 +60,7 @@ namespace ARC.API.Controllers.V1
         [HttpPost("refresh-token")]
         [ApiResponse(StatusCodes.Status200OK, typeof(AuthDTO))]
         [ApiResponse(StatusCodes.Status400BadRequest)]
+        [EndpointDescription("Refreshes the access token using the refresh token stored in the cookie.")]
         public async Task<IActionResult> RefreshToken()
         {
             var refreshToken = HttpContext.Request.Cookies[RefreshTokenCookieName];
@@ -80,6 +81,7 @@ namespace ARC.API.Controllers.V1
         /// <returns>Returns 204 No Content on successful token revocation.</returns>
         [HttpPost("revoke-token")]
         [ApiResponse(StatusCodes.Status204NoContent)]
+        [EndpointDescription("Revokes the current refresh token and removes it from the cookie.")]
         public async Task<IActionResult> RevokeToken()
         {
             var refreshToken = Request.Cookies[RefreshTokenCookieName];
@@ -100,8 +102,9 @@ namespace ARC.API.Controllers.V1
         [HttpGet("confirm-email")]
         [ApiResponse(StatusCodes.Status200OK)]
         [ApiResponse(StatusCodes.Status400BadRequest)]
+        [EndpointDescription("Confirms a user's email address using the provided confirmation code.")]
         public async Task<IActionResult> ConfirmEmail(
-            [FromQuery] string userId,
+            [FromQuery] int userId,
             [FromQuery] string code,
             [FromQuery] string? changedEmail = null)
         {
@@ -118,6 +121,7 @@ namespace ARC.API.Controllers.V1
         [HttpPost("resend-confirmation-email")]
         [ApiResponse(StatusCodes.Status200OK)]
         [ApiResponse(StatusCodes.Status400BadRequest)]
+        [EndpointDescription("Resends email confirmation to the specified email address.")]
         public async Task<IActionResult> ResendConfirmationEmail([FromBody] ResendConfirmationEmailCommand command)
         {
             var response = await _mediator.Send(command);
@@ -132,6 +136,7 @@ namespace ARC.API.Controllers.V1
         [HttpPost("forgot-password")]
         [ApiResponse(StatusCodes.Status200OK)]
         [ApiResponse(StatusCodes.Status400BadRequest)]
+        [EndpointDescription("Sends a password reset link to the specified email address.")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand command)
         {
             var response = await _mediator.Send(command);
@@ -146,6 +151,7 @@ namespace ARC.API.Controllers.V1
         [HttpPost("reset-password")]
         [ApiResponse(StatusCodes.Status200OK)]
         [ApiResponse(StatusCodes.Status400BadRequest)]
+        [EndpointDescription("Resets a user's password using the provided reset code.")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand command)
         {
             var response = await _mediator.Send(command);

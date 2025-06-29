@@ -1,5 +1,7 @@
 
 
+using ARC.Application.Features.Auth.Models;
+
 namespace ARC.Application.Features.Auth.Commands.Login
 {
     public class LoginCommandHandler(

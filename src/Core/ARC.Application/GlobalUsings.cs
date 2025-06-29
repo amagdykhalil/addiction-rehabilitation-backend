@@ -8,7 +8,7 @@ global using ARC.Domain.Entities;
 global using ARC.Shared.Keys;
 global using Ardalis.Result;
 global using FluentValidation;
+global using FluentValidation.Validators;
 global using MediatR;
 global using Microsoft.Extensions.Localization;
 global using Microsoft.Extensions.Logging;
-

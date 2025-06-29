@@ -5,17 +5,24 @@
 
         public static class Validation
         {
-            public static string EmailRequired { get; private set; }
-            public static string PasswordRequired { get; private set; }
-            public static string InvalidEmail { get; private set; }
-            public static string MustBeGreaterThanZero { get; private set; }
-            public static string PasswordTooShort { get; private set; }
-            public static string PasswordRequiresDigit { get; private set; }
-            public static string PasswordRequiresUpper { get; private set; }
-            public static string PasswordRequiresLower { get; private set; }
-            public static string PasswordRequiresNonAlphanumeric { get; private set; }
-            public static string PasswordTooLong { get; private set; }
-            public static string ResetCodeRequired { get; private set; }
+            public static string Required { get; set; }
+            public static string BetweenLength { get; set; }
+            public static string InvalidFormat { get; set; }
+            public static string MustBeInPast { get; set; }
+            public static string IsInEnum { get; set; }
+            public static string MustBeGreaterThanOrEquel { get; set; }
+            public static string MustBeLessThanOrEquel { get; set; }
+            public static string IdentificationRequired { get; set; }
+            public static string UserUnauthorized { get; set; }
+
+
+            public static string PasswordTooShort { get; set; }
+            public static string PasswordTooLong { get; set; }
+            public static string PasswordRequiresDigit { get; set; }
+            public static string PasswordRequiresUpper { get; set; }
+            public static string PasswordRequiresLower { get; set; }
+            public static string PasswordRequiresNonAlphanumeric { get; set; }
         }
     }
 }
+

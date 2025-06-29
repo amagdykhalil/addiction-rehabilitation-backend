@@ -8,6 +8,8 @@ namespace ARC.API.Controllers.V1
     public class SettingsController : ControllerBase
     {
         [HttpPost("set-language")]
+        [ApiResponse(StatusCodes.Status204NoContent)]
+        [EndpointDescription("Sets the preferred  language")]
         public IActionResult SetLanguage([FromQuery] string culture)
         {
             Response.Cookies.Append(

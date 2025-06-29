@@ -51,7 +51,7 @@ public class PasswordValidator<T> : AsyncPropertyValidator<T, string>
             "PasswordRequiresLower" => localizer[LocalizationKeys.Validation.PasswordRequiresLower],
             "PasswordRequiresNonAlphanumeric" => localizer[LocalizationKeys.Validation.PasswordRequiresNonAlphanumeric],
             "PasswordTooLong" => localizer[LocalizationKeys.Validation.PasswordTooLong, MaxPasswordLength],
-            _ => errorCode // fallback
+            _ => localizer[LocalizationKeys.Validation.InvalidFormat]
         };
     }
 }

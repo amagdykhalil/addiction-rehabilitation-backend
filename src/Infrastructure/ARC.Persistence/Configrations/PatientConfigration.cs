@@ -7,6 +7,7 @@ namespace ARC.Persistence.Configrations
         public void Configure(EntityTypeBuilder<Patient> builder)
         {
             builder.ToTable("Patients");
+
             builder.HasKey(p => p.Id);
 
             builder.HasOne(p => p.Person)

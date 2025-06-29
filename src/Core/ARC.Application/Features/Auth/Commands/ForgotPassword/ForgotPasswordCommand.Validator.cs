@@ -1,3 +1,5 @@
+using ARC.Application.Common.Validator;
+
 namespace ARC.Application.Features.Auth.Commands.ForgotPassword
 {
     public class ForgotPasswordCommandValidator : AbstractValidator<ForgotPasswordCommand>
@@ -6,10 +8,7 @@ namespace ARC.Application.Features.Auth.Commands.ForgotPassword
             IStringLocalizer<ForgotPasswordCommandValidator> localizer)
         {
             RuleFor(f => f.Email)
-                .NotEmpty()
-                .WithMessage(localizer[LocalizationKeys.Validation.EmailRequired])
-                .EmailAddress()
-                .WithMessage(localizer[LocalizationKeys.Validation.InvalidEmail]);
+                .SetValidator(new CustomEmailValidator<ForgotPasswordCommand>(localizer, true));
         }
     }
-} 
+}

@@ -22,37 +22,6 @@ namespace ARC.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ARC.Domain.Entities.RefreshToken", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ExpiresOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("RevokedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("RefreshTokens");
-                });
-
             modelBuilder.Entity("ARC.Domain.Entities.Address", b =>
                 {
                     b.Property<int>("Id")
@@ -364,50 +333,6 @@ namespace ARC.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EmploymentStatuses", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name_ar = "عاطل عن العمل",
-                            Name_en = "Unemployed"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name_ar = "عمل مستقل",
-                            Name_en = "Self Employed"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name_ar = "يعمل ويدرس",
-                            Name_en = "Working & Studying"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name_ar = "لا يعمل ويدرس",
-                            Name_en = "Not Working & Studying"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name_ar = "ربة منزل",
-                            Name_en = "Homemaker"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name_ar = "متقاعد",
-                            Name_en = "Retired"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name_ar = "لا يوجد رد",
-                            Name_en = "No Response"
-                        });
                 });
 
             modelBuilder.Entity("ARC.Domain.Entities.Patient", b =>
@@ -417,6 +342,9 @@ namespace ARC.Persistence.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("BirthDate")
+                        .HasColumnType("date");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -501,9 +429,6 @@ namespace ARC.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("CallPhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -513,7 +438,8 @@ namespace ARC.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Gender")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasComment("stores 1 for Female, 0 for Male");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -544,24 +470,17 @@ namespace ARC.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("NationalIdNumber")
+                        .IsUnique()
+                        .HasFilter("[NationalIdNumber] IS NOT NULL");
+
                     b.HasIndex("NationalityId");
 
-                    b.ToTable("People", (string)null);
+                    b.HasIndex("PassportNumber")
+                        .IsUnique()
+                        .HasFilter("[PassportNumber] IS NOT NULL");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BirthDate = new DateTime(2001, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CallPhoneNumber = "01148425889",
-                            FirstName = "Ahmed",
-                            Gender = false,
-                            LastName = "Khalil",
-                            NationalIdNumber = "30225485672598",
-                            NationalityId = 64,
-                            SecondName = "Magdy",
-                            ThirdName = "Mostafa"
-                        });
+                    b.ToTable("People", (string)null);
                 });
 
             modelBuilder.Entity("ARC.Domain.Entities.Placement", b =>
@@ -642,6 +561,37 @@ namespace ARC.Persistence.Migrations
                     b.HasIndex("ResearchQuestionId");
 
                     b.ToTable("QuestionVersions", (string)null);
+                });
+
+            modelBuilder.Entity("ARC.Domain.Entities.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RevokedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("ARC.Domain.Entities.Research", b =>
@@ -892,7 +842,7 @@ namespace ARC.Persistence.Migrations
                     b.ToTable("States", (string)null);
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Identity.User", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -964,26 +914,6 @@ namespace ARC.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Users", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "aa5a51aa-162d-4e9e-805c-c76645da10f2",
-                            Email = "ahmed.magdy.dev9@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "AHMED.MAGDY.DEV9@GMAIL.COM",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBCAwMGhwLxOSyC+U8pfBQy8SawEMXvexJEF5+QVFM5WCinzdOj2y1mcwO6FgaF3HA==",
-                            PersonId = 1,
-                            PhoneNumber = "01148425889",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "aa5a51aa-162d-4e9e-805c-c76645da10f2",
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
@@ -1014,20 +944,6 @@ namespace ARC.Persistence.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("Roles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Receptionist",
-                            NormalizedName = "RECEPTIONIST"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -1112,13 +1028,6 @@ namespace ARC.Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = 1,
-                            RoleId = 1
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -1138,17 +1047,6 @@ namespace ARC.Persistence.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("UserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("ARC.Domain.Entities.RefreshToken", b =>
-                {
-                    b.HasOne("ARC.Persistence.Identity.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ARC.Domain.Entities.Address", b =>
@@ -1342,6 +1240,17 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("ResearchQuestion");
                 });
 
+            modelBuilder.Entity("ARC.Domain.Entities.RefreshToken", b =>
+                {
+                    b.HasOne("ARC.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ARC.Domain.Entities.Research", b =>
                 {
                     b.HasOne("ARC.Domain.Entities.AdmissionAssessment", "AdmissionAssessment")
@@ -1464,11 +1373,11 @@ namespace ARC.Persistence.Migrations
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("ARC.Persistence.Identity.User", b =>
+            modelBuilder.Entity("ARC.Domain.Entities.User", b =>
                 {
                     b.HasOne("ARC.Domain.Entities.Person", "Person")
                         .WithOne()
-                        .HasForeignKey("ARC.Persistence.Identity.User", "PersonId")
+                        .HasForeignKey("ARC.Domain.Entities.User", "PersonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1486,7 +1395,7 @@ namespace ARC.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("ARC.Persistence.Identity.User", null)
+                    b.HasOne("ARC.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1495,7 +1404,7 @@ namespace ARC.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("ARC.Persistence.Identity.User", null)
+                    b.HasOne("ARC.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1510,7 +1419,7 @@ namespace ARC.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ARC.Persistence.Identity.User", null)
+                    b.HasOne("ARC.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1519,7 +1428,7 @@ namespace ARC.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("ARC.Persistence.Identity.User", null)
+                    b.HasOne("ARC.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

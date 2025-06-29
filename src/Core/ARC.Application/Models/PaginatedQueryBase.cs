@@ -6,6 +6,12 @@ namespace ARC.Application.Common.Models
     /// Base class for paginated queries that provides common pagination functionality.
     /// </summary>
     /// <typeparam name="TData">The type of data in the paginated result.</typeparam>
+    public enum SortDirection
+    {
+        Ascending = 0,
+        Descending = 1
+    }
+
     public abstract record PaginatedQueryBase<TData> : IPaginatedQuery<TData>
     {
         // maximum page size you will let clients request
@@ -17,14 +23,18 @@ namespace ARC.Application.Common.Models
         public int PageNumber
         {
             get => _pageNumber;
-            init => _pageNumber = value < 1 ? 1 : value;
+            set => _pageNumber = value < 1 ? 1 : value;
         }
 
         public short PageSize
         {
             get => _pageSize;
-            init => _pageSize = value > MaxPageSize ? MaxPageSize : value;
+            set => _pageSize = value > MaxPageSize ? MaxPageSize : value < 1 ? _pageSize : value;
         }
+
+        public SortDirection SortDirection { get; set; } = SortDirection.Ascending;
+
+        public string? SearchQuery { get; set; }
     }
 
     /// <summary>

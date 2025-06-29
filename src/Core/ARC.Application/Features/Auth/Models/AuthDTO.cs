@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace ARC.Application.Features.Auth
+namespace ARC.Application.Features.Auth.Models
 {
     public class AuthDTO
     {

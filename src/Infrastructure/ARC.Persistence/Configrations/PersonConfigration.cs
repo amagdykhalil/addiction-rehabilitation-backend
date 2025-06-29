@@ -15,8 +15,17 @@ namespace ARC.Persistence.Configrations
             builder.Property(p => p.PassportNumber).HasMaxLength(50);
             builder.Property(p => p.PersonalImageURL).HasMaxLength(255);
 
+            // Unique nullable constraint for NationalIdNumber
+            builder.HasIndex(p => p.NationalIdNumber)
+                   .IsUnique();
+
+            // Unique nullable constraint for PassportNumber
+            builder.HasIndex(p => p.PassportNumber)
+                   .IsUnique();
+
 
             builder.Property(p => p.Gender)
+                   .HasComment("stores 1 for Female, 0 for Male")
                    .HasConversion(
                         v => v == enGender.Female,
                         v => v ? enGender.Female : enGender.Male);

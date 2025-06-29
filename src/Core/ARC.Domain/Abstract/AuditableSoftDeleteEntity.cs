@@ -1,5 +1,3 @@
-using ARC.Domain.Interfaces;
-
 namespace ARC.Domain.Abstract
 {
     public abstract class AuditableSoftDeleteEntity : Entity, IAuditable, ISoftDeleteable
@@ -10,6 +8,7 @@ namespace ARC.Domain.Abstract
         public int? LastModifiedBy { get; set; }
         public DateTime? DeletedAt { get; set; }
         public int? DeletedBy { get; set; }
+        public bool IsDeleted => DeletedAt.HasValue;
     }
 }
 

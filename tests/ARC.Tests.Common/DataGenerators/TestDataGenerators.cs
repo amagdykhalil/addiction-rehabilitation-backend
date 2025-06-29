@@ -20,7 +20,6 @@ namespace ARC.Tests.Common.DataGenerators
             .RuleFor(p => p.ThirdName, f => f.Name.FirstName())
             .RuleFor(p => p.LastName, f => f.Name.LastName())
             .RuleFor(p => p.Gender, f => f.PickRandom<enGender>())
-            .RuleFor(p => p.BirthDate, f => f.Date.Past(50))
             .RuleFor(p => p.CallPhoneNumber, f => f.Phone.PhoneNumber())
             .RuleFor(p => p.NationalIdNumber, f => f.Random.Replace("##########"))
             .RuleFor(p => p.PassportNumber, f => f.Random.Replace("##########"))

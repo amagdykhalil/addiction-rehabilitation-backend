@@ -1,5 +1,4 @@
 ﻿using ARC.Domain.Enums;
-using ARC.Persistence.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace ARC.Persistence.Extensions
@@ -42,7 +41,7 @@ namespace ARC.Persistence.Extensions
                     ThirdName = "Mostafa",
                     LastName = "Khalil",
                     Gender = enGender.Male,
-                    BirthDate = new DateTime(2001, 10, 25),
+
                     CallPhoneNumber = "01148425889",
                     NationalIdNumber = "30225485672598",
                     NationalityId = 64, //Egypt 

@@ -36,12 +36,12 @@ namespace ARC.API
             services.AddDistributedMemoryCache();
 
 
-            services.AddPersistence(_configuration)
-                    .AddInfrastructure(_configuration)
-                    .AddApplication(_configuration);
+            services.AddApplication(_configuration)
+                .AddInfrastructure(_configuration)
+                .AddPersistence(_configuration);
 
             services.AddSingleton<IFluentValidationAutoValidationResultFactory, ValidationResultFactory>();
-            services.AddOpenApi();
+            services.AddOpenApi("v1", options => { options.AddDocumentTransformer<BearerSecuritySchemeTransformer>(); });
 
             services.AddAPIVersioning();
             services.AddGlobalRateLimiter();
@@ -73,6 +73,3 @@ namespace ARC.API
         }
     }
 }
-
-
-

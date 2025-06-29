@@ -1,4 +1,5 @@
-using ARC.Application.Abstractions.UserContext;
+using ARC.Application.Common.Validator;
+using ARC.Application.Features.Auth.Common;
 
 namespace ARC.Application.Features.Auth.Commands.ResetPassword
 {
@@ -9,17 +10,13 @@ namespace ARC.Application.Features.Auth.Commands.ResetPassword
             IIdentityService identityService)
         {
             RuleFor(r => r.Email)
-                .NotEmpty()
-                .WithMessage(localizer[LocalizationKeys.Validation.EmailRequired])
-                .EmailAddress()
-                .WithMessage(localizer[LocalizationKeys.Validation.InvalidEmail]);
+                .SetValidator(new CustomEmailValidator<ResetPasswordCommand>(localizer));
 
             RuleFor(r => r.ResetCode)
-                .NotEmpty()
-                .WithMessage(localizer[LocalizationKeys.Validation.ResetCodeRequired]);
+                .SetValidator(new CodeValidator<ResetPasswordCommand>(localizer));
 
             RuleFor(r => r.NewPassword)
                 .SetAsyncValidator(new PasswordValidator<ResetPasswordCommand>(identityService, localizer));
         }
     }
-} 
+}

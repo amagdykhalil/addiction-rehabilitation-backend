@@ -10,8 +10,7 @@ namespace ARC.Application.Features.People.Commands.Add
             => new Person
             {
                 FirstName = command.FirstName,
-                LastName = command.LastName,
-                BirthDate = command.DateOfBirth
+                LastName = command.LastName
             };
     }
 }

@@ -26,7 +26,7 @@ namespace ARC.Shared.Keys
             var rootType = typeof(LocalizationKeys);
             foreach (var fileType in rootType.GetNestedTypes(BindingFlags.Public | BindingFlags.Static))
             {
-                string file = fileType.Name.ToLowerInvariant();
+                string file = char.ToLowerInvariant(fileType.Name[0]) + fileType.Name.Substring(1);
                 WalkType(fileType, new[] { fileType.Name }, file);
             }
         }

@@ -9,17 +9,19 @@ namespace Infrastructure.Authentication;
 public sealed class UserContext : IUserContext
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IStringLocalizer<UserContext> _validationLocalizer;
 
-    public UserContext(IHttpContextAccessor httpContextAccessor)
+    public UserContext(IHttpContextAccessor httpContextAccessor, IStringLocalizer<UserContext> validationLocalizer)
     {
         _httpContextAccessor = httpContextAccessor;
+        _validationLocalizer = validationLocalizer;
     }
 
     public int UserId =>
         _httpContextAccessor
             .HttpContext?
             .User
-            .GetUserId() ??
+            .GetUserId(_validationLocalizer) ??
         throw new ApplicationException("User context is unavailable");
 }
 

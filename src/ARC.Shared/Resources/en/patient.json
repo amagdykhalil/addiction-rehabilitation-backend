@@ -1,0 +1,8 @@
+{
+  "NotFound": "Patient not found.",
+  "NotFoundById": "Patient with ID {0} not found.",
+  "NotFoundByNationalId": "Patient with National ID {0} not found.",
+  "NotFoundByPassport": "Patient with Passport Number {0} not found.",
+  "Created": "Patient created successfully.",
+  "CreationFail": "Failed to create patient. Please try again."
+}

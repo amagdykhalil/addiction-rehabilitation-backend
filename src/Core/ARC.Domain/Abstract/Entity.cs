@@ -1,5 +1,3 @@
-using ARC.Domain.Interfaces;
-
 namespace ARC.Domain.Abstract
 {
     public abstract class Entity : IEntity

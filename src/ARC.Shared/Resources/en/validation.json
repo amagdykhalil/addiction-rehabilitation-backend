@@ -9,5 +9,14 @@
   "PasswordRequiresUpper": "Password must contain at least one uppercase letter.",
   "PasswordRequiresLower": "Password must contain at least one lowercase letter.",
   "PasswordRequiresNonAlphanumeric": "Password must contain at least one special character.",
-  "ResetCodeRequired": "Reset code is required"
+  "ResetCodeRequired": "Reset code is required",
+  "Required": "This field is required.",
+  "BetweenLength": "This field must be between {0} and {1} characters.",
+  "InvalidFormat": "The format is invalid.",
+  "MustBeInPast": "The date must be in the past.",
+  "IsInEnum": "The value is not valid.",
+  "MustBeGreaterThanOrEquel": "This field must be greater than or equal {0}.",
+  "MustBeLessThanOrEquel": "This field must be less than or equal {0}.",
+  "IdentificationRequired": "Either National ID or Passport Number must be provided.",
+  "UserUnauthorized": "You are not authorized to access this resource"
 }

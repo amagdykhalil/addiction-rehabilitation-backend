@@ -1,5 +1,3 @@
-using ARC.Application.Abstractions.UserContext;
-using ARC.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
@@ -13,7 +11,7 @@ namespace ARC.Application.Features.Auth.Commands.ConfirmEmail
     {
         public async Task<Result> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
         {
-            var user = await identityService.FindByIdAsync(request.UserId);
+            var user = await identityService.FindByIdAsync(request.UserId.ToString());
 
             if (user == null)
             {
@@ -56,4 +54,4 @@ namespace ARC.Application.Features.Auth.Commands.ConfirmEmail
             return Result.Success();
         }
     }
-} 
+}

@@ -1,3 +1,5 @@
+using ARC.Application.Common.Validator;
+
 namespace ARC.Application.Features.Auth.Commands.ResendConfirmationEmail
 {
     public class ResendConfirmationEmailCommandValidator : AbstractValidator<ResendConfirmationEmailCommand>
@@ -6,10 +8,7 @@ namespace ARC.Application.Features.Auth.Commands.ResendConfirmationEmail
             IStringLocalizer<ResendConfirmationEmailCommandValidator> localizer)
         {
             RuleFor(r => r.Email)
-                .NotEmpty()
-                .WithMessage(localizer[LocalizationKeys.Validation.EmailRequired])
-                .EmailAddress()
-                .WithMessage(localizer[LocalizationKeys.Validation.InvalidEmail]);
+                .SetValidator(new CustomEmailValidator<ResendConfirmationEmailCommand>(localizer));
         }
     }
-} 
+}

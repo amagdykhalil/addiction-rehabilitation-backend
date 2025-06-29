@@ -9,5 +9,14 @@
   "PasswordRequiresUpper": "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل.",
   "PasswordRequiresLower": "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل.",
   "PasswordRequiresNonAlphanumeric": "يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل.",
-  "ResetCodeRequired": "رمز إعادة التعيين مطلوب"
+  "ResetCodeRequired": "رمز إعادة التعيين مطلوب",
+  "Required": "هذه الخانة مطلوبة.",
+  "BetweenLength": "يجب أن يكون بين {0} و {1} حرفاً.",
+  "InvalidFormat": "الصيغة غير صحيحة.",
+  "MustBeInPast": "يجب أن يكون التاريخ في الماضي.",
+  "IsInEnum": "القيمة غير صحيحة.",
+  "MustBeGreaterThanOrEquel": "يجب أن يكون أكبر من أو يساوي {0}.",
+  "MustBeLessThanOrEquel": "يجب أن يكون أقل من أو يساوي {0}.",
+  "IdentificationRequired": "يجب تقديم رقم الهوية الوطنية أو رقم جواز السفر.",
+  "UserUnauthorized": "ليس لديك إذن للوصول إلى هذا المورد."
 }

@@ -1,4 +1,5 @@
 using ARC.Application.Abstractions.Services;
+using ARC.Application.Features.Auth.Models;
 
 namespace ARC.Application.Features.Auth.Commands.RefreshToken
 {
@@ -13,10 +14,6 @@ namespace ARC.Application.Features.Auth.Commands.RefreshToken
     {
         public async Task<Result<AuthDTO>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
         {
-            if (string.IsNullOrEmpty(request.Token))
-            {
-                return Result<AuthDTO>.Error(localizer[LocalizationKeys.Auth.InvalidToken]);
-            }
 
             var refreshToken = await refreshTokenRepository.GetWithUserAsync(request.Token);
 

@@ -1,3 +1,5 @@
+using ARC.Application.Common.Validator;
+
 namespace ARC.Application.Features.Auth.Commands.Login
 {
     public class LoginCommandValidator : AbstractValidator<LoginCommand>
@@ -7,14 +9,13 @@ namespace ARC.Application.Features.Auth.Commands.Login
             IIdentityService identityService)
         {
             RuleFor(l => l.Email)
-                .NotEmpty()
-                .WithMessage(localizer[LocalizationKeys.Validation.EmailRequired])
-                .EmailAddress()
-                .WithMessage(localizer[LocalizationKeys.Validation.InvalidEmail]);
+                .SetValidator(new CustomEmailValidator<LoginCommand>(localizer, true));
 
             RuleFor(l => l.Password)
                 .NotEmpty()
-                .WithMessage(localizer[LocalizationKeys.Validation.PasswordRequired]);
+                .WithMessage(localizer[LocalizationKeys.Validation.Required])
+                .MaximumLength(50)
+                .WithMessage(localizer[LocalizationKeys.Validation.PasswordTooLong]);
         }
     }
 }

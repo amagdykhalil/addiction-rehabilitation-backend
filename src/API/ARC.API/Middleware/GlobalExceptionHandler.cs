@@ -1,3 +1,4 @@
+using ARC.Shared.Keys;
 using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Data.SqlClient;
@@ -5,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System.Net;
 using System.Text.Json;
-using ARC.Shared.Keys;
 
 namespace ARC.API.Middleware
 {
@@ -89,7 +89,7 @@ namespace ARC.API.Middleware
         {
             _logger.LogError(ex, "Database update failed.");
 
-            return ApiResponse.InternalServerError(new List<ApiErrorResponse>
+            return ApiResponse.Conflict(new List<ApiErrorResponse>
             {
                 new(_localizer[LocalizationKeys.GlobalException.DbError])
             });
@@ -97,6 +97,7 @@ namespace ARC.API.Middleware
 
         private ApiResponse HandleSqlException(SqlException sqlEx)
         {
+
             _logger.LogError(sqlEx, "SQL Server exception occurred.");
 
             var (statusCode, message) = sqlEx.Number switch
