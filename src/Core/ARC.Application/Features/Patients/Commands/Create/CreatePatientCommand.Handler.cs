@@ -24,7 +24,7 @@ namespace ARC.Application.Features.Patients.Commands.Create
         public async Task<Result<int>> Handle(CreatePatientCommand command, CancellationToken cancellationToken)
         {
             var patient = command.MapToPatient();
-            await _patientRepository.AddAsync(patient);
+            await _patientRepository.AddAsync(patient, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             if (patient.Id == 0)

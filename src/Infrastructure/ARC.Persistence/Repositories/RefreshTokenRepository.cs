@@ -1,6 +1,7 @@
 using ARC.Application.Abstractions.Services;
 using ARC.Application.Contracts.Persistence;
-using Microsoft.Extensions.Configuration;
+using ARC.Application.Features.Auth.Models;
+using Microsoft.Extensions.Options;
 using System.Security.Cryptography;
 
 namespace ARC.Persistence.Repositories
@@ -10,17 +11,17 @@ namespace ARC.Persistence.Repositories
         private readonly AppDbContext _context;
         private readonly int _refreshTokenLifetime;
         private readonly IDateTimeProvider _dateTimeProvider;
-        public RefreshTokenRepository(AppDbContext context, IConfiguration configuration, IDateTimeProvider dateTimeProvider) : base(context)
+        public RefreshTokenRepository(AppDbContext context,IOptions<RefreshTokenSettings> refreshTokenSettings, IDateTimeProvider dateTimeProvider) : base(context)
         {
             _context = context;
-            _refreshTokenLifetime = configuration.GetValue<int>("RefreshToken:ExpirationDays");
+            _refreshTokenLifetime = refreshTokenSettings.Value.ExpirationDays;
             _dateTimeProvider = dateTimeProvider;
         }
 
 
-        public async Task<RefreshToken?> GetActiveRefreshTokenAsync(int userId)
+        public async Task<RefreshToken?> GetActiveRefreshTokenAsync(int userId, CancellationToken cancellationToken = default)
         {
-            return await _context.RefreshTokens.FirstOrDefaultAsync(r => r.RevokedOn == null && r.ExpiresOn > _dateTimeProvider.UtcNow && r.UserId == userId);
+            return await _context.RefreshTokens.FirstOrDefaultAsync(r => r.RevokedOn == null && r.ExpiresOn > _dateTimeProvider.UtcNow && r.UserId == userId, cancellationToken);
         }
 
         public RefreshToken GenerateRefreshToken(int userId)
@@ -42,14 +43,14 @@ namespace ARC.Persistence.Repositories
             };
         }
 
-        public async Task<RefreshToken?> GetWithUserAsync(string token)
+        public async Task<RefreshToken?> GetWithUserAsync(string token, CancellationToken cancellationToken = default)
         {
-            return await _context.RefreshTokens.Include(r => r.User).FirstOrDefaultAsync(r => r.Token == token);
+            return await _context.RefreshTokens.Include(r => r.User).FirstOrDefaultAsync(r => r.Token == token, cancellationToken);
         }
 
-        public async Task<RefreshToken?> GetAsync(string token)
+        public async Task<RefreshToken?> GetAsync(string token, CancellationToken cancellationToken = default)
         {
-            return await _context.RefreshTokens.FirstOrDefaultAsync(r => r.Token == token);
+            return await _context.RefreshTokens.FirstOrDefaultAsync(r => r.Token == token, cancellationToken);
         }
     }
 }

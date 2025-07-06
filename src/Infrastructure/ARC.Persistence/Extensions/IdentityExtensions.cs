@@ -7,9 +7,11 @@ namespace ARC.Persistence.Extensions
     {
         public static void AddAppIdentity(this IServiceCollection services)
         {
-            services.AddIdentity<User, IdentityRole<int>>(options =>
+            services.AddIdentity<User, Role>(options =>
             {
                 options.Password.RequiredLength = 8;
+                options.User.RequireUniqueEmail = true;
+
             }).AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
         }

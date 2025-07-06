@@ -31,14 +31,13 @@ namespace ARC.API
 
             services.AddCors(_configuration);
 
-            services.AddProblemDetails();
-            services.AddAuthorization();
+            services.AddProblemDetails(); ;
             services.AddDistributedMemoryCache();
 
 
             services.AddApplication(_configuration)
-                .AddInfrastructure(_configuration)
-                .AddPersistence(_configuration);
+                .AddPersistence(_configuration)
+                .AddInfrastructure(_configuration);
 
             services.AddSingleton<IFluentValidationAutoValidationResultFactory, ValidationResultFactory>();
             services.AddOpenApi("v1", options => { options.AddDocumentTransformer<BearerSecuritySchemeTransformer>(); });

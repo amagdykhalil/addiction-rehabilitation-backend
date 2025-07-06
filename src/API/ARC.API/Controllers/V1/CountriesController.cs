@@ -21,9 +21,9 @@ namespace ARC.API.Controllers.V1
         [HttpGet]
         [ProducesResponseType(typeof(List<CountryDto>), 200)]
         [EndpointDescription("Gets all countries (localized name)")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(new GetAllCountriesQuery());
+            var result = await _mediator.Send(new GetAllCountriesQuery(), cancellationToken);
             return result.ToActionResult();
         }
     }

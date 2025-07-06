@@ -12,6 +12,8 @@
             public static string PasswordResetSent { get; private set; }
             public static string PasswordResetSuccess { get; private set; }
             public static string InvalidResetCode { get; private set; }
+            public static string ShouldConfirmEmail { get; private set; }
+            public static string InactiveUser { get; private set; }
         }
     }
 }

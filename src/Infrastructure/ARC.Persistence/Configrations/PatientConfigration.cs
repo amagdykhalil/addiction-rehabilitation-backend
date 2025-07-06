@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore;
 
 namespace ARC.Persistence.Configrations
 {
@@ -14,6 +15,9 @@ namespace ARC.Persistence.Configrations
                    .WithOne()
                    .HasForeignKey<Patient>(p => p.PersonId)
                    .OnDelete(DeleteBehavior.Restrict);
+
+            // Apply soft delete filter
+            builder.HasQueryFilter(p => p.DeletedAt == null);
         }
     }
 }

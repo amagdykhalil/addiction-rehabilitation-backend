@@ -18,7 +18,7 @@ namespace ARC.Application.Features.Patients.Queries.GetByNationalId
 
         public async Task<Result<PatientDetailsDto>> Handle(GetPatientByNationalIdQuery query, CancellationToken cancellationToken)
         {
-            var patient = await _patientRepository.GetByNationalIdAsync(query.NationalId);
+            var patient = await _patientRepository.GetByNationalIdAsync(query.NationalId, cancellationToken);
 
             if (patient == null)
             {

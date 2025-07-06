@@ -62,7 +62,7 @@ namespace ARC.Persistence.Migrations
                 values: new object[,]
                 {
                     { 1, null, "Admin", "ADMIN" },
-                    { 2, null, "Receptionist", "RECEPTIONIST" }
+                    { 2, null, "Receptionist", "RECEPTIONIST"}
                 });
         }
 

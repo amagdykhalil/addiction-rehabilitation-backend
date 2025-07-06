@@ -1,4 +1,4 @@
-﻿using System;
+﻿using ARC.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -11,6 +11,9 @@ namespace ARC.Persistence.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            if (SqlMigrationHelper.IsTesting())
+                return;
+
             migrationBuilder.InsertData(
                 table: "People",
                 columns: new[] { "Id", "BirthDate", "CallPhoneNumber", "FirstName", "Gender", "LastName", "NationalIdNumber", "NationalityId", "PassportNumber", "PersonalImageURL", "SecondName", "ThirdName" },

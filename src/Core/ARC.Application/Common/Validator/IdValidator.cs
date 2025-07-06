@@ -14,7 +14,7 @@
         public override bool IsValid(ValidationContext<T> context, int value)
         {
 
-            if (value <= 1)
+            if (value < 1)
             {
                 context.AddFailure(_localizer[LocalizationKeys.Validation.MustBeGreaterThanOrEquel, 1]);
                 return false;

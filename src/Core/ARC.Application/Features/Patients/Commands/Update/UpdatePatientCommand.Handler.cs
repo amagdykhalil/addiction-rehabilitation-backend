@@ -22,15 +22,14 @@ namespace ARC.Application.Features.Patients.Commands.Update
 
         public async Task<Result<bool>> Handle(UpdatePatientCommand command, CancellationToken cancellationToken)
         {
-            using var transaction = await _unitOfWork.BeginTransactionAsync(cancellationToken);
-            var patient = await _patientRepository.GetByIdWithPersonAsync(command.Id);
+            var patient = await _patientRepository.GetByIdWithPersonAsync(command.Id, cancellationToken);
+
             if (patient == null)
                 return Result.Error(_localizer[LocalizationKeys.Patient.NotFound]);
 
             command.MapToEntities(patient);
-
             await _unitOfWork.SaveChangesAsync(cancellationToken);
-            await transaction.CommitAsync(cancellationToken);
+
             _logger.LogInformation("Updated patient with ID: {PatientId}", patient.Id);
             return Result.Success(true);
         }

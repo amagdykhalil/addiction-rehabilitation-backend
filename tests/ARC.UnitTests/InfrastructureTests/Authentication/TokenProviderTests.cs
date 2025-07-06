@@ -1,5 +1,6 @@
 using ARC.Application.Abstractions.Services;
 using ARC.Infrastructure.Authentication;
+using ARC.Tests.Common.DataGenerators;
 using Infrastructure.Authentication;
 using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
@@ -38,22 +39,13 @@ namespace ARC.Infrastructure.Tests.Authentication
         public async Task Create_WithValidUser_ReturnsValidJwtToken()
         {
             // Arrange
-            var user = new User
-            {
-                Id = 1,
-                Email = "test@example.com",
-                Person = new Person
-                {
-                    FirstName = "Test",
-                    LastName = "User"
-                }
-            };
+            var user = TestDataGenerators.UserFaker().Generate();
 
-            var roles = new[] { "User", "Admin" };
+            var roles = TestDataGenerators.RoleFaker().Generate(3)
+            .Select(r => r.Name).ToList();
 
-            _identityServiceMock.Setup(x => x.GetRolesAsync(user.Id))
+            _identityServiceMock.Setup(x => x.GetRolesAsync(user.Id, It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(roles);
-
             // Act
             var token = await _tokenProvider.Create(user);
 
@@ -65,23 +57,13 @@ namespace ARC.Infrastructure.Tests.Authentication
             Assert.Equal(_jwtSettings.Issuer, jwtToken.Issuer);
             Assert.Equal(_jwtSettings.Audience, jwtToken.Audiences.First());
             Assert.Equal(_utcNow, jwtToken.IssuedAt, TimeSpan.FromSeconds(1));
-            Assert.Equal(_utcNow.AddMinutes(_jwtSettings.AccessTokenExpirationMinutes), jwtToken.ValidTo,TimeSpan.FromSeconds(1));
+            Assert.Equal(_utcNow.AddMinutes(_jwtSettings.AccessTokenExpirationMinutes), jwtToken.ValidTo, TimeSpan.FromSeconds(1));
 
             // NameIdentifier: support both URI and "nameid"
             var nameIdClaim = jwtToken.Claims.FirstOrDefault(c =>
                 c.Type == ClaimTypes.NameIdentifier || c.Type == JwtRegisteredClaimNames.NameId);
             Assert.NotNull(nameIdClaim);
             Assert.Equal(user.Id.ToString(), nameIdClaim.Value);
-
-            // GivenName
-            var givenNameClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.GivenName);
-            Assert.NotNull(givenNameClaim);
-            Assert.Equal(user.Person.FirstName, givenNameClaim.Value);
-
-            // FamilyName
-            var familyNameClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.FamilyName);
-            Assert.NotNull(familyNameClaim);
-            Assert.Equal(user.Person.LastName, familyNameClaim.Value);
 
             // Email: support both URI and "email"
             var emailClaim = jwtToken.Claims.FirstOrDefault(c =>

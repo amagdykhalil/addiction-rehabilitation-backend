@@ -15,6 +15,7 @@ public sealed class UserContext : IUserContext
     {
         _httpContextAccessor = httpContextAccessor;
         _validationLocalizer = validationLocalizer;
+
     }
 
     public int UserId =>

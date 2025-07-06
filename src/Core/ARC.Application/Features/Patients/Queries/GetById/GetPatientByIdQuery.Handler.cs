@@ -18,7 +18,7 @@ namespace ARC.Application.Features.Patients.Queries.GetById
 
         public async Task<Result<PatientDetailsDto>> Handle(GetPatientByIdQuery query, CancellationToken cancellationToken)
         {
-            var patient = await _patientRepository.GetByIdWithPersonAsync(query.Id);
+            var patient = await _patientRepository.GetByIdWithPersonAsync(query.Id, cancellationToken);
 
             if (patient == null)
             {

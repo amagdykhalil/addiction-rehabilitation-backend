@@ -14,28 +14,28 @@ namespace ARC.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<Patient?> GetByNationalIdAsync(string nationalId)
+        public async Task<Patient?> GetByNationalIdAsync(string nationalId, CancellationToken cancellationToken = default)
         {
             return await _context.Patients
                 .Include(p => p.Person)
                 .ThenInclude(p => p.Nationality)
-                .FirstOrDefaultAsync(p => p.Person.NationalIdNumber == nationalId);
+                .FirstOrDefaultAsync(p => p.Person.NationalIdNumber == nationalId, cancellationToken);
         }
 
-        public async Task<Patient?> GetByPassportNumberAsync(string passportNumber)
+        public async Task<Patient?> GetByPassportNumberAsync(string passportNumber, CancellationToken cancellationToken = default)
         {
             return await _context.Patients
                 .Include(p => p.Person)
                 .ThenInclude(p => p.Nationality)
-                .FirstOrDefaultAsync(p => p.Person.PassportNumber == passportNumber);
+                .FirstOrDefaultAsync(p => p.Person.PassportNumber == passportNumber, cancellationToken);
         }
 
-        public async Task<Patient?> GetByIdWithPersonAsync(int id)
+        public async Task<Patient?> GetByIdWithPersonAsync(int id, CancellationToken cancellationToken = default)
         {
             return await _context.Patients
                 .Include(p => p.Person)
                 .ThenInclude(p => p.Nationality)
-                .FirstOrDefaultAsync(p => p.Id == id);
+                .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
         }
 
 
@@ -70,19 +70,19 @@ namespace ARC.Persistence.Repositories
             switch (sortBy)
             {
                 case PatientSortBy.FirstName:
-                    query = sortDirection == SortDirection.Descending ? query.OrderByDescending(p => p.Person.FirstName) : query.OrderBy(p => p.Person.FirstName);
+                    query = sortDirection == SortDirection.Desc ? query.OrderByDescending(p => p.Person.FirstName) : query.OrderBy(p => p.Person.FirstName);
                     break;
                 case PatientSortBy.LastName:
-                    query = sortDirection == SortDirection.Descending ? query.OrderByDescending(p => p.Person.LastName) : query.OrderBy(p => p.Person.LastName);
+                    query = sortDirection == SortDirection.Desc ? query.OrderByDescending(p => p.Person.LastName) : query.OrderBy(p => p.Person.LastName);
                     break;
                 case PatientSortBy.NationalId:
-                    if (sortDirection == SortDirection.Descending)
+                    if (sortDirection == SortDirection.Desc)
                         query = query.OrderByDescending(p => p.Person.NationalIdNumber ?? p.Person.PassportNumber);
                     else
                         query = query.OrderBy(p => p.Person.NationalIdNumber ?? p.Person.PassportNumber);
                     break;
                 default:
-                    query = sortDirection == SortDirection.Descending ? query.OrderByDescending(p => p.Id) : query.OrderBy(p => p.Id);
+                    query = sortDirection == SortDirection.Desc ? query.OrderByDescending(p => p.Id) : query.OrderBy(p => p.Id);
                     break;
             }
 
@@ -95,16 +95,21 @@ namespace ARC.Persistence.Repositories
             return new PagedResult<Patient>(data, pageNumber, pageSize, totalCount);
         }
 
-        public async Task<int?> isExistsByNationalIdNumber(string NationalIdNumber)
+        public async Task<int?> isExistsByNationalIdNumber(string NationalIdNumber, CancellationToken cancellationToken = default)
         {
             return await _context.Patients.Where(e => e.Person.NationalIdNumber == NationalIdNumber)
-                .Select(e => (int?)e.Id).FirstOrDefaultAsync();
+                .Select(e => (int?)e.Id).FirstOrDefaultAsync(cancellationToken);
         }
 
-        public async Task<int?> isExistsByPassword(string Password)
+        public async Task<int?> isExistsByPasswordAsync(string Password, CancellationToken cancellationToken = default)
         {
             return await _context.Patients.Where(e => e.Person.PassportNumber == Password)
-                .Select(e => (int?)e.Id).FirstOrDefaultAsync();
+                .Select(e => (int?)e.Id).FirstOrDefaultAsync(cancellationToken);
+        }
+
+        public async Task<Patient?> GetByIdInlcudePersonAsync(int id, CancellationToken cancellationToken = default)
+        {
+            return await _context.Patients.Include(e => e.Person).Where(e => e.Id == id).FirstOrDefaultAsync(cancellationToken);
         }
     }
 }

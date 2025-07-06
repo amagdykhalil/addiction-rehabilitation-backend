@@ -1,0 +1,68 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# MDC Curser Rule File: Testing instruction
+
+## Generale instructions
+- use [TestCollections.cs](mdc:tests/ARC.IntegrationTests/Common/TestCollections.cs) to generate any data fro testing 
+- add any common testing login at [ARC.Tests.Common.csproj](mdc:tests/ARC.Tests.Common/ARC.Tests.Common.csproj) project 
+- Naming convention for test method is `MethodName_Scenario_ExpectedResult` as 
+`Create_WithValidUser_ReturnsValidJwtToken`, `Handle_ValidResetCode_ReturnsSuccess`, `Handle_UserExistsAndEmailConfirmed_SendsResetLink_ReturnsSuccess`
+- Divide method login into three parts Arrange, Act, Assert
+### Example
+```C#
+ public async Task Handle_InvalidCredentials_ReturnsError()
+        {
+            // Arrange
+            var command = new LoginCommand("test@example.com", "hashedPassword");
+            var errorMessage = "Email or password is incorrect!";
+
+            _identityServiceMock.Setup(x => x.GetUserAsync(command.Email, command.Password))
+                .ReturnsAsync((User?)null);
+
+            _localizerMock.Setup(x => x[LocalizationKeys.Auth.InvalidCredentials])
+                .Returns(new LocalizedString(LocalizationKeys.Auth.InvalidCredentials, errorMessage));
+
+            // Act
+            var result = await _handler.Handle(command, CancellationToken.None);
+
+            // Assert
+            Assert.False(result.IsSuccess);
+            Assert.Equal(errorMessage, result.Errors.First());
+
+            _tokenProviderMock.Verify(x => x.Create(It.IsAny<User>()), Times.Never);
+            _refreshTokenRepositoryMock.Verify(x => x.GetActiveRefreshTokenAsync(It.IsAny<int>()), Times.Never);
+            _refreshTokenRepositoryMock.Verify(x => x.AddAsync(It.IsAny<RefreshToken>()), Times.Never);
+            _unitOfWorkMock.Verify(x => x.SaveChangesAsync(CancellationToken.None), Times.Never);
+        }
+```
+
+## For Unit test instructions
+- add all unit tests at [ARC.UnitTests.csproj](mdc:tests/ARC.UnitTests/ARC.UnitTests.csproj)
+- Any layer has its own folder at this project as ApplicationTest, InfrastructureTest
+- For testing handlers at ApplicationTest, inherite from "IClassFixture<LocalizationKeyFixture>" to initalize localization keys 
+- mock any used interfaces as private readonly prop
+- you should test all test cases and branchs when test any method
+
+
+## For integration tests instructions
+- All reusable integration test logic should add at Common folder
+- Any layer has its own folder at this project as PersistanceTests
+- register any test repositories and any needed datbase service at [DatabaseServiceCollectionExtensions.cs](mdc:tests/ARC.IntegrationTests/PersistanceTests/Database/Extensions/DatabaseServiceCollectionExtensions.cs)
+- All database test should inherite from `BaseDatabaseTests`
+- ignore negative scenarios entirely and focus on the “happy path”. 
+- use integration testing for positive scenarios, which have clear input conditions
+- do not attempt to test all scenarios with integration tests just focus on  “happy path”
+- should prepare all of the data they require for the test beforehand at Arrange section of method 
+- After completing the integration tests, compare the new values with the baseline to identify discrepancies and launch investigation
+- Some methods have a single positive path, such as GetById, which should be tested to confirm it retrieves the entity by its ID. Others, like UpdateUserRoles, have multiple positive paths. Tests should cover cases such as: if no roles are sent, the user should have no roles; if roles are sent, the user should only have the specified roles.
+- Use [Theory] when multiple test cases share the same logic but differ in input values. For example, in GetUsers, which filters users, testing different filtering scenarios will follow the same logic but with varying filter values.
+
+
+
+
+
+
+

@@ -1,34 +1,33 @@
 
 
-namespace ARC.IntegrationTests.Infrastructure.Database.Repositories
+using ARC.IntegrationTests.PersistanceTests.Database.Common;
+
+namespace ARC.IntegrationTests.PersistanceTests.Database.Repositories
 {
-    [Collection(TestCollections.DatabaseTests)]
-    public class RefreshTokenRepositoryTests
+
+    public class RefreshTokenRepositoryTests : BaseDatabaseTests
     {
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly IIdentityService _identityService;
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IServiceProvider _serviceProvider;
 
-        public RefreshTokenRepositoryTests(DatabaseTestEnvironmentFixture fixture)
+        public RefreshTokenRepositoryTests(DatabaseTestEnvironmentFixture fixture) : base(fixture)
         {
-            _serviceProvider = fixture.ServiceProvider;
-            _refreshTokenRepository = _serviceProvider.GetRequiredService<IRefreshTokenRepository>();
-            _identityService = _serviceProvider.GetRequiredService<IIdentityService>();
-            _unitOfWork = _serviceProvider.GetRequiredService<IUnitOfWork>();
+            _refreshTokenRepository = ServiceProvider.GetRequiredService<IRefreshTokenRepository>();
+            _identityService = ServiceProvider.GetRequiredService<IIdentityService>();
         }
 
+
         [Fact]
-        public async Task GenerateRefreshToken_ShouldCreateNewToken()
+        public async Task GenerateRefreshToken_CreatesNewToken()
         {
             // Arrange
             var user = TestDataGenerators.UserFaker().Generate();
-            var result = await _identityService.CreateUserAsync(user, "Test123!");
+            var result = await _identityService.CreateUserAsync(user);
 
             // Act
             var token = _refreshTokenRepository.GenerateRefreshToken(user.Id);
             await _refreshTokenRepository.AddAsync(token);
-            await _unitOfWork.SaveChangesAsync();
+            await UnitOfWork.SaveChangesAsync();
 
             // Assert
             Assert.NotNull(token);
@@ -39,20 +38,19 @@ namespace ARC.IntegrationTests.Infrastructure.Database.Repositories
         }
 
         [Fact]
-        public async Task GetActiveRefreshTokenAsync_ShouldReturnActiveToken()
+        public async Task GetActiveRefreshTokenAsync_ReturnsActiveToken()
         {
             // Arrange
             var user = TestDataGenerators.UserFaker().Generate();
-            var result = await _identityService.CreateUserAsync(user, "Test123!");
+            var result = await _identityService.CreateUserAsync(user);
 
 
             var token = _refreshTokenRepository.GenerateRefreshToken(user.Id);
             await _refreshTokenRepository.AddAsync(token);
-            await _unitOfWork.SaveChangesAsync();
+            await UnitOfWork.SaveChangesAsync();
 
             // Act
             var activeToken = await _refreshTokenRepository.GetActiveRefreshTokenAsync(user.Id);
-
             // Assert
             Assert.NotNull(activeToken);
             Assert.Equal(token.Token, activeToken.Token);
@@ -60,16 +58,16 @@ namespace ARC.IntegrationTests.Infrastructure.Database.Repositories
         }
 
         [Fact]
-        public async Task GetAsync_ShouldReturnTokenByValue()
+        public async Task GetAsync_ReturnsTokenByValue()
         {
             // Arrange
             var user = TestDataGenerators.UserFaker().Generate();
-            var result = await _identityService.CreateUserAsync(user, "Test123!");
+            var result = await _identityService.CreateUserAsync(user);
 
 
             var token = _refreshTokenRepository.GenerateRefreshToken(user.Id);
             await _refreshTokenRepository.AddAsync(token);
-            await _unitOfWork.SaveChangesAsync();
+            await UnitOfWork.SaveChangesAsync();
 
             // Act
             var foundToken = await _refreshTokenRepository.GetAsync(token.Token);
@@ -81,16 +79,16 @@ namespace ARC.IntegrationTests.Infrastructure.Database.Repositories
         }
 
         [Fact]
-        public async Task GetWithUserAsync_ShouldReturnTokenWithUser()
+        public async Task GetWithUserAsync_ReturnsTokenWithUser()
         {
             // Arrange
             var user = TestDataGenerators.UserFaker().Generate();
-            var result = await _identityService.CreateUserAsync(user, "Test123!");
+            var result = await _identityService.CreateUserAsync(user);
 
 
             var token = _refreshTokenRepository.GenerateRefreshToken(user.Id);
             await _refreshTokenRepository.AddAsync(token);
-            await _unitOfWork.SaveChangesAsync();
+            await UnitOfWork.SaveChangesAsync();
 
             // Act
             var foundToken = await _refreshTokenRepository.GetWithUserAsync(token.Token);
@@ -100,5 +98,6 @@ namespace ARC.IntegrationTests.Infrastructure.Database.Repositories
             Assert.NotNull(foundToken.User);
             Assert.Equal(user.Id, foundToken.User.Id);
         }
+
     }
 }

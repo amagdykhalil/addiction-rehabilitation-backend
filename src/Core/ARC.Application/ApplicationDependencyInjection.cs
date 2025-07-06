@@ -1,3 +1,4 @@
+using ARC.Application.Features.Auth.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
@@ -24,7 +25,7 @@ namespace ARC.Application
                 config.EnableQueryBindingSourceAutomaticValidation = true;
                 config.EnablePathBindingSourceAutomaticValidation = true;
             });
-
+            services.Configure<RefreshTokenSettings>(configuration.GetSection("RefreshToken"));
             return services;
         }
     }

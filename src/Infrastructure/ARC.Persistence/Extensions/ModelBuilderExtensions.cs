@@ -17,18 +17,20 @@ namespace ARC.Persistence.Extensions
                 new EmploymentStatus { Id = 7, Name_ar = "لا يوجد رد", Name_en = "No Response" }
             );
 
-            modelBuilder.Entity<IdentityRole<int>>().HasData(
-                new IdentityRole<int>
+            modelBuilder.Entity<Role>().HasData(
+                new Role
                 {
                     Id = 1,
                     Name = "Admin",
-                    NormalizedName = "ADMIN"
+                    NormalizedName = "ADMIN",
+                    Name_ar = "مسؤول"
                 },
-                new IdentityRole<int>
+                new Role
                 {
                     Id = 2,
                     Name = "Receptionist",
-                    NormalizedName = "RECEPTIONIST"
+                    NormalizedName = "RECEPTIONIST",
+                    Name_ar = "موظف الاستقبال"
                 }
             );
 

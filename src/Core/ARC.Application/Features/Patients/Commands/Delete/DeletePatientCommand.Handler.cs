@@ -6,18 +6,16 @@ namespace ARC.Application.Features.Patients.Commands.Delete
     {
         private readonly IPatientRepository _patientRepository;
         private readonly ILogger<DeletePatientCommandHandler> _logger;
-        private readonly IStringLocalizer<DeletePatientCommandHandler> _localizer;
 
-        public DeletePatientCommandHandler(IPatientRepository patientRepository, ILogger<DeletePatientCommandHandler> logger, IStringLocalizer<DeletePatientCommandHandler> localizer)
+        public DeletePatientCommandHandler(IPatientRepository patientRepository, ILogger<DeletePatientCommandHandler> logger)
         {
             _patientRepository = patientRepository;
             _logger = logger;
-            _localizer = localizer;
         }
 
         public async Task<Result<bool>> Handle(DeletePatientCommand command, CancellationToken cancellationToken)
         {
-            await _patientRepository.DeleteAsync(command.Id);
+            await _patientRepository.DeleteAsync(command.Id, cancellationToken);
 
             _logger.LogInformation("Deleted patient with ID: {PatientId}", (command.Id));
             return Result.Success(true);

@@ -1,41 +1,38 @@
-namespace ARC.IntegrationTests.PersistanceTests2.Database.Repositories
+using ARC.IntegrationTests.PersistanceTests.Database.Common;
+
+namespace ARC.IntegrationTests.PersistanceTests.Database.Repositories
 {
-    [Collection(TestCollections.DatabaseTests)]
-    public class PersonRepositoryTests
+
+    public class PersonRepositoryTests : BaseDatabaseTests
     {
         private readonly IPersonRepository _personRepository;
-        private readonly IUnitOfWork _unitOfWork;
 
-        private readonly IServiceProvider _serviceProvider;
-
-        public PersonRepositoryTests(DatabaseTestEnvironmentFixture fixture)
+        public PersonRepositoryTests(DatabaseTestEnvironmentFixture fixture) : base(fixture)
         {
-            _serviceProvider = fixture.ServiceProvider;
-            _personRepository = _serviceProvider.GetRequiredService<IPersonRepository>();
-            _unitOfWork = _serviceProvider.GetRequiredService<IUnitOfWork>();
+            _personRepository = ServiceProvider.GetRequiredService<IPersonRepository>();
         }
 
         [Fact]
-        public async Task AddAsync_ShouldAddNewPerson()
+        public async Task AddAsync_CreatesPerson()
         {
             // Arrange
             var person = TestDataGenerators.PersonFaker().Generate();
 
             // Act
             await _personRepository.AddAsync(person);
-            await _unitOfWork.SaveChangesAsync();
+            await UnitOfWork.SaveChangesAsync();
 
             // Assert
             Assert.NotEqual(0, person.Id);
         }
 
         [Fact]
-        public async Task GetByIdAsync_ShouldReturnPerson()
+        public async Task GetByIdAsync_ReturnsPerson()
         {
             // Arrange
             var person = TestDataGenerators.PersonFaker().Generate();
             await _personRepository.AddAsync(person);
-            await _unitOfWork.SaveChangesAsync();
+            await UnitOfWork.SaveChangesAsync();
 
             // Act
             var foundPerson = await _personRepository.GetByIdAsync(person.Id);

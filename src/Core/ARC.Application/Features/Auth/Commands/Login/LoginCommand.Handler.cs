@@ -1,5 +1,3 @@
-
-
 using ARC.Application.Features.Auth.Models;
 
 namespace ARC.Application.Features.Auth.Commands.Login
@@ -15,11 +13,21 @@ namespace ARC.Application.Features.Auth.Commands.Login
     {
         public async Task<Result<AuthDTO>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var user = await identityService.GetUserAsync(request.Email, request.Password);
+            var user = await identityService.GetUserAsync(request.Email, request.Password, cancellationToken);
 
             if (user == null)
             {
                 return Result<AuthDTO>.Error(localizer[LocalizationKeys.Auth.InvalidCredentials]);
+            }
+
+            if (!await identityService.IsEmailConfirmedAsync(user, cancellationToken))
+            {
+                return Result<AuthDTO>.Unauthorized(localizer[LocalizationKeys.Auth.ShouldConfirmEmail]);
+            }
+
+            if (user.DeletedAt != null)
+            {
+                return Result<AuthDTO>.Unauthorized(localizer[LocalizationKeys.Auth.InactiveUser]);
             }
 
             var accessToken = await tokenProvider.Create(user);
@@ -30,7 +38,7 @@ namespace ARC.Application.Features.Auth.Commands.Login
                 ExpiresOn = tokenProvider.GetAccessTokenExpiration(),
             };
 
-            var ActiveRefreshToken = await refreshTokenRepository.GetActiveRefreshTokenAsync(user.Id);
+            var ActiveRefreshToken = await refreshTokenRepository.GetActiveRefreshTokenAsync(user.Id, cancellationToken);
 
             if (ActiveRefreshToken != null)
             {
@@ -41,12 +49,12 @@ namespace ARC.Application.Features.Auth.Commands.Login
             {
                 var refreshToken = refreshTokenRepository.GenerateRefreshToken(user.Id);
 
-                await refreshTokenRepository.AddAsync(refreshToken);
+                await refreshTokenRepository.AddAsync(refreshToken, cancellationToken);
 
                 AuthInfo.RefreshToken = refreshToken.Token;
                 AuthInfo.RefreshTokenExpiration = refreshToken.ExpiresOn;
 
-                await unitOfWork.SaveChangesAsync();
+                await unitOfWork.SaveChangesAsync(cancellationToken);
             }
 
             return Result<AuthDTO>.Success(AuthInfo);

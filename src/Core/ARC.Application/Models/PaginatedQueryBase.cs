@@ -8,8 +8,8 @@ namespace ARC.Application.Common.Models
     /// <typeparam name="TData">The type of data in the paginated result.</typeparam>
     public enum SortDirection
     {
-        Ascending = 0,
-        Descending = 1
+        Asc = 0,
+        Desc = 1
     }
 
     public abstract record PaginatedQueryBase<TData> : IPaginatedQuery<TData>
@@ -32,7 +32,7 @@ namespace ARC.Application.Common.Models
             set => _pageSize = value > MaxPageSize ? MaxPageSize : value < 1 ? _pageSize : value;
         }
 
-        public SortDirection SortDirection { get; set; } = SortDirection.Ascending;
+        public SortDirection SortDirection { get; set; } = SortDirection.Asc;
 
         public string? SearchQuery { get; set; }
     }

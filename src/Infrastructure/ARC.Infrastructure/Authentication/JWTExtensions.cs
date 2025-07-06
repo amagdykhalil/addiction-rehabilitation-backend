@@ -8,7 +8,7 @@ namespace ARC.Infrastructure.Authentication
 {
     public static class JWTExtensions
     {
-        public static void AddJWT(IServiceCollection services, IConfiguration configuration)
+        public static void AddJWT(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<JWTSettings>(configuration.GetSection("JwtSettings"));
 
@@ -32,7 +32,8 @@ namespace ARC.Infrastructure.Authentication
                     ValidateAudience = true,
                     ValidAudience = jwtSettings.Audience,
                     ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero
+                    ClockSkew = TimeSpan.Zero,
+                    SaveSigninToken = true
                 };
             });
         }

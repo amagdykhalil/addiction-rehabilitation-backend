@@ -18,7 +18,7 @@ namespace ARC.Application.Features.Patients.Queries.GetByPassport
 
         public async Task<Result<PatientDetailsDto>> Handle(GetPatientByPassportQuery query, CancellationToken cancellationToken)
         {
-            var patient = await _patientRepository.GetByPassportNumberAsync(query.PassportNumber);
+            var patient = await _patientRepository.GetByPassportNumberAsync(query.PassportNumber,cancellationToken);
 
             if (patient == null)
             {

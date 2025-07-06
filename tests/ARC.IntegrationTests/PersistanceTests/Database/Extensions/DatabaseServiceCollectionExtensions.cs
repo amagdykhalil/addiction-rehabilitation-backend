@@ -1,18 +1,19 @@
 ﻿using ARC.Application.Abstractions.Services;
+using ARC.Application.Features.Auth.Models;
 using ARC.Infrastructure.Common.Services;
 using ARC.Persistence;
 using ARC.Persistence.Extensions;
 using ARC.Persistence.Identity;
-using ARC.Persistence.Repositories;
 using ARC.Persistence.UoW;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace ARC.IntegrationTests.Infrastructure.Extensions
 {
     public static class DatabaseServiceCollectionExtensions
     {
-        public static IServiceCollection ConfigureDatabaseServices(this IServiceCollection services, string connectionString)
+        public static IServiceCollection ConfigureDatabaseServices(this IServiceCollection services, string connectionString, IConfiguration configuration)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -23,7 +24,8 @@ namespace ARC.IntegrationTests.Infrastructure.Extensions
                 .ConfigureLogging()
                 .ConfigureIdentity()
                 .ConfigureDbContext(connectionString)
-                .ConfigureRepositories();
+                .ConfigureRepositories()
+                .Configure<RefreshTokenSettings>(configuration.GetSection("RefreshToken"));
         }
 
         private static IServiceCollection ConfigureLogging(this IServiceCollection services)
@@ -53,9 +55,9 @@ namespace ARC.IntegrationTests.Infrastructure.Extensions
 
         private static IServiceCollection ConfigureRepositories(this IServiceCollection services)
         {
+            services.ScanAndRegisterRepositories();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IPersonRepository, PersonRepository>();
-            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IDateTimeProvider, DateTimeProvider>();
 

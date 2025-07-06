@@ -25,6 +25,7 @@ namespace ARC.Persistence.Extensions
                         provider.GetRequiredService<UpdateAuditableInterceptor>()
                     )
                     .LogTo(Console.WriteLine, LogLevel.Information);
+
             });
 
             return services;

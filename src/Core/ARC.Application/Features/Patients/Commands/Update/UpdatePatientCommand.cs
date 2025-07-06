@@ -8,7 +8,7 @@ namespace ARC.Application.Features.Patients.Commands.Update
         // Person Details
         public string FirstName { get; init; }
         public string SecondName { get; init; }
-        public string ThirdName { get; init; }
+        public string? ThirdName { get; init; }
         public string LastName { get; init; }
         public enGender Gender { get; init; }
         public string CallPhoneNumber { get; init; }

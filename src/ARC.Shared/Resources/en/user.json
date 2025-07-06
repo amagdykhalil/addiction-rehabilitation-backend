@@ -1,0 +1,22 @@
+{
+  "NotFound": "User not found.",
+  "NotFoundById": "User with ID {0} not found.",
+  "NotFoundByEmail": "User with email {0} not found.",
+  "Created": "User created successfully.",
+  "CreationFail": "Failed to create user. Please try again.",
+  "Updated": "User updated successfully.",
+  "UpdateFail": "Failed to update user. Please try again.",
+  "Deleted": "User deleted successfully.",
+  "DeleteFail": "Failed to delete user. Please try again.",
+  "EmailAlreadyExists": "Email {0} is already registered.",
+  "InvalidEmailOrPassword": "Invalid email or password.",
+  "EmailNotConfirmed": "Email is not confirmed. Please check your email and confirm your account.",
+  "PasswordResetSent": "Password reset email sent successfully.",
+  "PasswordResetFail": "Failed to send password reset email. Please try again.",
+  "EmailConfirmationSent": "Email confirmation sent successfully.",
+  "EmailConfirmationFail": "Failed to send email confirmation. Please try again.",
+  "NotFoundByNationalId": "User with National ID {0} not found.",
+  "NotFoundByPassport": "User with Passport Number {0} not found.",
+  "GetAllRolesSuccess": "Roles fetched successfully.",
+  "GetAllRolesFail": "Failed to fetch roles. Please try again."
+}

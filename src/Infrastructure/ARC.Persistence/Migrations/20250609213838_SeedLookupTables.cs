@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using ARC.Persistence.Extensions;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -10,18 +11,12 @@ namespace ARC.Persistence.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            var sqlFolderPath = GetSqlFolderPath();
+            if (SqlMigrationHelper.IsTesting())
+                return;
 
-            var seedData = new List<string>
+            foreach (var file in new[] { "countries.sql", "states.sql", "cities.sql" })
             {
-                { Path.Combine(sqlFolderPath, "countries.sql") },
-                { Path.Combine(sqlFolderPath, "states.sql") },
-                { Path.Combine(sqlFolderPath, "cities.sql") }
-            };
-
-            foreach (string sqlPath in seedData)
-            {
-                var sql = File.ReadAllText(sqlPath);
+                var sql = SqlMigrationHelper.LoadSql(file);
                 migrationBuilder.Sql(sql);
             }
         }
@@ -32,19 +27,6 @@ namespace ARC.Persistence.Migrations
             migrationBuilder.Sql("Delete from Countries");
             migrationBuilder.Sql("Delete from States");
             migrationBuilder.Sql("Delete from Cities");
-        }
-
-        private static string GetSqlFolderPath()
-        {
-            var workingDirectory = Environment.CurrentDirectory;
-            var solutionDirectory = Directory.GetParent(workingDirectory)?.Parent?.Parent?.FullName;
-
-            if (solutionDirectory is null)
-                throw new DirectoryNotFoundException("Unable to locate the solution directory.");
-
-            var sqlFolder = Path.Combine(solutionDirectory, "scripts");
-
-            return sqlFolder;
         }
     }
 }
