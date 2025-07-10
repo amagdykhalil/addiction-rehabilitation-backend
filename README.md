@@ -28,6 +28,9 @@
   - [🤖 Usage](#🤖-usage)
   - [🧪 Testing](#🧪-testing)
 - [📌 Project Roadmap](#-project-roadmap)
+- [📑 API Documentation](#-api-documentation)
+- [🔑 Test User Credentials](#-test-user-credentials)
+- [📊 Logging](#-logging)
 - [🔰 Contributing](#-contributing)
 
 ---
@@ -159,6 +162,33 @@ Run the test suite using the following command:
 - [ ] **Inpatient Treatment Process**: Support for managing inpatient treatment workflows (not yet defined)
 - [ ] **Outpatient Treatment Process**: Support for managing outpatient treatment workflows (not yet defined)
 - [ ] **Discharge Process**: Comprehensive discharge planning and workflow (not yet defined)
+
+---
+
+## 📑 API Documentation
+
+Interactive API documentation is available via Scalar:
+
+- **URL:** `/scalar/v1`
+- Use this to explore and test all available API endpoints.
+
+---
+
+## 🔑 Test User Credentials
+
+You can test authorized endpoints using the following credentials:
+
+- **Email:** `ahmed.magdy.dev9@gmail.com`
+- **Password:** `Admin@123`
+
+---
+
+## 📊 Logging
+
+Application logs are managed and visualized using **Seq**:
+
+- **Port:** `5173`
+- Visit this address to view, search, and analyze logs in real time.
 
 ---
 
