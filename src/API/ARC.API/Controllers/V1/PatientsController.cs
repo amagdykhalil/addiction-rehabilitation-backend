@@ -9,13 +9,14 @@ using ARC.Application.Features.Patients.Queries.GetByNationalId;
 using ARC.Application.Features.Patients.Queries.GetByPassport;
 using ARC.Application.Features.Patients.Queries.GetPatients;
 using ARC.Application.Features.Patients.Queries.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ARC.API.Controllers.V1
 {
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/patients")]
-
+    [Authorize]
     public class PatientsController : ControllerBase
     {
         private readonly IMediator _mediator;

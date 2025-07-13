@@ -7,8 +7,6 @@ namespace ARC.Application.Features.Auth.Commands.ForgotPassword
     {
         private readonly IIdentityService _identityService;
         private readonly IUserEmailService _userEmailService;
-        private readonly IStringLocalizer<ForgotPasswordCommandHandler> _localizer;
-        private readonly string _frontendBaseUrl;
         private readonly IUserActionLinkBuilder _userActionLinkBuilder;
 
         public ForgotPasswordCommandHandler(
@@ -20,7 +18,6 @@ namespace ARC.Application.Features.Auth.Commands.ForgotPassword
         {
             _identityService = identityService;
             _userEmailService = userEmailService;
-            _localizer = localizer;
             _userActionLinkBuilder = userActionLinkBuilder;
         }
 

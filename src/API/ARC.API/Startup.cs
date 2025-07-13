@@ -48,15 +48,14 @@ namespace ARC.API
         public void Configure(WebApplication app)
         {
 
-            if (app.Environment.IsDevelopment())
+
+            app.MapOpenApi();
+            app.MapScalarApiReference(options =>
             {
-                app.MapOpenApi();
-                app.MapScalarApiReference(options =>
-                {
-                    options.WithTitle("ARC API Reference")
-                           .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
-                });
-            }
+                options.WithTitle("ARC API Reference")
+                       .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
+            });
+
 
             app.UseForwardedHeaders();
 

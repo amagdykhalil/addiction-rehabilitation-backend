@@ -9,7 +9,7 @@ namespace ARC.API.Controllers.V1
     {
         [HttpPost("set-language")]
         [ApiResponse(StatusCodes.Status204NoContent)]
-        [EndpointDescription("Sets the preferred  language")]
+        [EndpointDescription("Sets the preferred language")]
         public IActionResult SetLanguage([FromQuery] string culture)
         {
             Response.Cookies.Append(
@@ -18,7 +18,6 @@ namespace ARC.API.Controllers.V1
                 new CookieOptions
                 {
                     Expires = DateTimeOffset.UtcNow.AddYears(1),
-                    Domain = "localhost",
                     SameSite = SameSiteMode.None,
                     Secure = true
 
