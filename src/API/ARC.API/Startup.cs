@@ -21,7 +21,6 @@ namespace ARC.API
         {
             builder.ConfigureLogging();
             builder.ConfigureAzureKeyVault();
-
         }
         public void ConfigureServices(IServiceCollection services)
         {
@@ -47,15 +46,12 @@ namespace ARC.API
         }
         public void Configure(WebApplication app)
         {
-
-
             app.MapOpenApi();
             app.MapScalarApiReference(options =>
             {
                 options.WithTitle("ARC API Reference")
                        .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
             });
-
 
             app.UseForwardedHeaders();
 
@@ -64,6 +60,7 @@ namespace ARC.API
 
             app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseCors(CorsExtensions.AllowsOrigins);
             app.UseRequestCulture();
 

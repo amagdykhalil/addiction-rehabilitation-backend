@@ -31,6 +31,7 @@ namespace ARC.Application.Features.Patients.Commands.Update
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             _logger.LogInformation("Updated patient with ID: {PatientId}", patient.Id);
+
             return Result.Success(true);
         }
     }

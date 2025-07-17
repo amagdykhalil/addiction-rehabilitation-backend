@@ -23,7 +23,7 @@ namespace ARC.API.Controllers.V1
 
                 }
             );
-            return NoContent();
+            return Ok(ApiResponse<string>.Ok(culture));
 
         }
     }
