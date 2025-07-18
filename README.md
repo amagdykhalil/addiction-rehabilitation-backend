@@ -41,7 +41,7 @@
 
 ## 📍 Overview
 
-Addiction Rehabilitation Backend is a RESTful API designed to streamline every stage of patient care—from admission intake and treatment planning to discharge and aftercare.
+Addiction Rehabilitation System is designed to streamline every stage of patient care—from admission intake and treatment planning to discharge and aftercare.
 It supports both inpatient and outpatient treatment paths, therapist session tracking, and progress metrics.
 Handles dynamic admission forms, multi‑modal treatment workflows, and comprehensive discharge planning.
 Provides a unified platform for managing the patient care in addiction rehabilitation centers.
